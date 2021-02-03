@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gico.datnq.library.smarttab
+package com.datnq.stack.overflow.users.datnq.library.smarttab
 
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams

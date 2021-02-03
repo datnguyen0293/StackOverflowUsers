@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gico.datnq.library.smarttab.utils.v4
+package com.datnq.stack.overflow.users.datnq.library.smarttab.utils.v4
 
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.gico.datnq.library.smarttab.utils.PagerItems
+import com.datnq.stack.overflow.users.datnq.library.smarttab.utils.PagerItems
 
 class FragmentPagerItems(context: Context?) : PagerItems<FragmentPagerItem?>(context) {
     class Creator(context: Context?) {

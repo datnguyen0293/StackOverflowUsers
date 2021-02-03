@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wrapperView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dimen_16"
+    tools:context=".application.view.activity.ReputationActivity">
+
+    <include
+        android:id="@+id/layoutUser"
+        layout="@layout/layout_user_item" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvReputation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layoutUser"
+        android:layout_marginTop="@dimen/dimen_16"
+        tools:listitem="@layout/layout_reputation_item" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/rcvReputation"
+        android:layout_alignTop="@id/rcvReputation"
+        android:layout_alignEnd="@id/rcvReputation"
+        android:layout_alignBottom="@id/rcvReputation"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="@dimen/dimen_16"
+        android:text="@string/no_reputations"
+        android:textAlignment="gravity"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="30sp"
+        android:visibility="visible" />
+</RelativeLayout>

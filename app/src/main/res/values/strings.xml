@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">StackOverflowUsers</string>
+    <string name="app_name">Stack Overflow Users</string>
+    <string name="processing">Processing&#8230;</string>
+    <string name="user">Stack overflow users</string>
+    <string name="no_users">There are no users</string>
+    <string name="no_reputations">There are no reputations</string>
+    <string name="favorite_user">Favorite users</string>
+    <string name="stack_overflow_site">stackoverflow</string>
+    <string name="sort_by">creation</string>
+    <string name="order_by">desc</string>
+    <string name="action_close">Close</string>
+    <string name="all">All</string>
+    <string name="favorite">Favorite</string>
+    <!-- Error -->
+    <string name="err_network_not_connected">Cannot connect to server!</string>
+    <string name="error_network">No internet connected</string>
+    <string name="err_timeout">Time out: Cannot connect to server!</string>
+    <string name="service_response_error_no_code">Unidentified error</string>
 </resources>

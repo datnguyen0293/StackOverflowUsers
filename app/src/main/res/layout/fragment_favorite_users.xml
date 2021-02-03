@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wrapperView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dimen_16" >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvUsers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/layout_user_item" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNoData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="@string/no_users"
+        android:textAlignment="gravity"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="30sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

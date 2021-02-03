@@ -1,4 +1,4 @@
-package com.gico.datnq.library.secure.preferences
+package com.datnq.stack.overflow.users.datnq.library.secure.preferences
 
 import java.security.Provider
 

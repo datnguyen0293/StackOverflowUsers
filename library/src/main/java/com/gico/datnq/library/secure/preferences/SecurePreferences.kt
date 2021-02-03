@@ -15,7 +15,7 @@
  */
 @file:Suppress("DEPRECATION")
 
-package com.gico.datnq.library.secure.preferences
+package com.datnq.stack.overflow.users.datnq.library.secure.preferences
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -26,8 +26,8 @@ import android.preference.PreferenceManager
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Base64
-import com.gico.datnq.library.BuildConfig
-import com.gico.datnq.library.utilities.LoggerUtil
+import com.datnq.stack.overflow.users.datnq.library.BuildConfig
+import com.datnq.stack.overflow.users.datnq.library.utilities.LoggerUtil
 import java.io.UnsupportedEncodingException
 import java.nio.charset.StandardCharsets
 import java.security.GeneralSecurityException

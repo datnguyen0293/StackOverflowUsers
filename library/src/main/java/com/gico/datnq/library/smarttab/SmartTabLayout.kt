@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gico.datnq.library.smarttab
+package com.datnq.stack.overflow.users.datnq.library.smarttab
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -32,8 +32,8 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.gico.datnq.library.R
-import com.gico.datnq.library.smarttab.SmartTabLayout.TabColorizer
+import com.datnq.stack.overflow.users.datnq.library.R
+import com.datnq.stack.overflow.users.datnq.library.smarttab.SmartTabLayout.TabColorizer
 import kotlin.math.roundToInt
 
 /**

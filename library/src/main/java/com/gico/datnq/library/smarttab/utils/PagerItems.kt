@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gico.datnq.library.smarttab.utils
+package com.datnq.stack.overflow.users.datnq.library.smarttab.utils
 
 import android.content.Context
 import java.util.*

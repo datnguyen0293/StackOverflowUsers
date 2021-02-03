@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_8"
+    android:layout_marginBottom="@dimen/dimen_8"
+    app:cardCornerRadius="@dimen/dimen_4">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_8">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageAvatar"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_120"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBookmark"
+            android:layout_width="@dimen/dimen_24"
+            android:layout_height="@dimen/dimen_24"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
+            android:focusable="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_favorite" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_toStartOf="@id/btnBookmark"
+            android:layout_toEndOf="@id/imageAvatar"
+            android:textColor="@color/red"
+            android:textSize="24sp"
+            tools:text="Nick" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvReputation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvUserName"
+            android:layout_alignStart="@id/tvUserName"
+            android:layout_alignParentEnd="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Reputation" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvReputation"
+            android:layout_alignStart="@id/tvUserName"
+            android:layout_alignParentEnd="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Location" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLastAccessDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvLocation"
+            android:layout_alignStart="@id/tvUserName"
+            android:layout_alignParentEnd="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Last Access Date" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -15,7 +15,7 @@
  */
 @file:Suppress("DEPRECATION")
 
-package com.gico.datnq.library.smarttab.utils.v4
+package com.datnq.stack.overflow.users.datnq.library.smarttab.utils.v4
 
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat

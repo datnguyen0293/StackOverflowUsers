@@ -1,4 +1,4 @@
-package com.gico.datnq.library.material.lockview
+package com.datnq.stack.overflow.users.datnq.library.material.lockview
 
 /**
  * The call back abstract class for detecting patterns entered by the user.

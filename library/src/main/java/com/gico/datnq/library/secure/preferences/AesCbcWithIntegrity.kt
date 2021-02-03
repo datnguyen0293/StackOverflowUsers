@@ -22,7 +22,7 @@
  * Created by Isaac Potoczny-Jones on 11/12/14.
  */
 
-package com.gico.datnq.library.secure.preferences
+package com.datnq.stack.overflow.users.datnq.library.secure.preferences
 
 import android.util.Base64
 import java.io.UnsupportedEncodingException

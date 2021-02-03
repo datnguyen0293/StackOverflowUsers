@@ -1,7 +1,8 @@
-package com.datnq.stack.overflow.users
+package com.datnq.stack.overflow.users.application.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.datnq.stack.overflow.users.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

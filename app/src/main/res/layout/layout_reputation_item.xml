@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_8"
+    android:layout_marginBottom="@dimen/dimen_8">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvReputationType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            tools:text="Reputation type" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvReputationType"
+            android:layout_alignStart="@id/tvReputationType"
+            android:layout_alignEnd="@id/tvReputationType"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Change" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCreatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvChange"
+            android:layout_alignStart="@id/tvChange"
+            android:layout_alignEnd="@id/tvChange"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Created at" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPostId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCreatedAt"
+            android:layout_alignStart="@id/tvCreatedAt"
+            android:layout_alignEnd="@id/tvCreatedAt"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Post ID" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

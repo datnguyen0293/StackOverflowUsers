@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gico.datnq.library.smarttab.utils.v4
+package com.datnq.stack.overflow.users.datnq.library.smarttab.utils.v4
 
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.gico.datnq.library.smarttab.utils.PagerItem
+import com.datnq.stack.overflow.users.datnq.library.smarttab.utils.PagerItem
 
 @Suppress("DEPRECATION")
 class FragmentPagerItem constructor(title: CharSequence?, width: Float, private val className: String, private val args: Bundle) : PagerItem(title, width) {
