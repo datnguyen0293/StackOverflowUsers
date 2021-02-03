@@ -1,0 +1,92 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion compileSdkVer
+    buildToolsVersion buildToolsVer
+
+    defaultConfig {
+        applicationId "com.datnq.stack.overflow.users"
+        minSdkVersion minSdkVer
+        targetSdkVersion targetSdkVer
+        versionCode 1
+        versionName "01"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude "META-INF/DEPENDENCIES.txt"
+        exclude "META-INF/DEPENDENCIES"
+        exclude "META-INF/dependencies.txt"
+        exclude "META-INF/LICENSE.txt"
+        exclude "META-INF/LICENSE"
+        exclude "META-INF/license.txt"
+        exclude "META-INF/LGPL2.1"
+        exclude "META-INF/NOTICE.txt"
+        exclude "META-INF/NOTICE"
+        exclude "META-INF/notice.txt"
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable "IconDensities"             //For testing purpose. This is safe to remove.
+        disable "IconMissingDensityFolder"  //For testing purpose. This is safe to remove.
+        disable "InvalidPackage"            //Some libraries have issues with this.
+        disable "OldTargetApi"              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable "Wakelock"
+    }
+
+    dexOptions {
+        preDexLibraries = false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(":library")
+    implementation "androidx.core:core-ktx:$ktxVer"
+    //noinspection GradleDependency
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVer"
+    implementation "androidx.cardview:cardview:$cardViewVer"
+    implementation "androidx.multidex:multidex:$multidexVer"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVer"
+    implementation "com.github.ybq:Android-SpinKit:$spinKit"
+    implementation "com.google.android.material:material:$materialVer"
+    implementation "com.makeramen:roundedimageview:$roundedImageviewVer"
+    implementation "com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:$advancedRecyclerView"
+    // reactivex
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVer"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVer"
+    // com.square up
+    implementation "com.squareup.okhttp:okhttp:$okhttpVer"
+    implementation "com.squareup.picasso:picasso:$picassoVer"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2Ver"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2Ver"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2Ver"
+    implementation "com.squareup.rx.idler:rx2-idler:$idlerVer"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Ver"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3Ver"
+    implementation "com.google.dagger:dagger-android-support:$daggerVer"
+    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVer"
+}
