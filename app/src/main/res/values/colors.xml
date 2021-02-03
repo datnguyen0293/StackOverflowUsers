@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#017284</color>
-    <color name="colorPrimaryDark">#017284</color>
-    <color name="colorAccent">#177FAC</color>
+    <color name="color_primary">#017284</color>
+    <color name="color_primary_dark">#017284</color>
+    <color name="color_accent">#177FAC</color>
     <color name="red">#FF0000</color>
     <color name="blue">#0080FF</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="controlInActive">#B0B0B0</color>
+    <color name="control_in_active">#B0B0B0</color>
+    <color name="color_white_transparent">#D9FFFFFF</color>
+    <color name="color_yellow">#FFFF00</color>
     <color name="grey">#808080</color>
     <color name="background">#F4F4F4</color>
 </resources>

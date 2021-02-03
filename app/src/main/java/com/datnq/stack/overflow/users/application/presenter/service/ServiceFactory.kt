@@ -1,6 +1,6 @@
-package com.datnq.stack.overflow.users.core.service
+package com.datnq.stack.overflow.users.application.presenter.service
 
-import com.datnq.stack.overflow.users.hotel.BuildConfig
+import com.datnq.stack.overflow.users.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -12,12 +12,13 @@ import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.X509TrustManager
+import javax.net.ssl.*
 
+/**
+ * @author dat nguyen
+ * @since 2019 Sep 12
+ */
 class ServiceFactory {
-
     companion object {
         /**
          * Create service api
@@ -69,20 +70,20 @@ class ServiceFactory {
         @JvmStatic
         private fun trustAllCerts(): Array<X509TrustManager> {
             return arrayOf(object : X509TrustManager {
-                        @Throws(CertificateException::class)
-                        override fun checkClientTrusted(chain: Array<X509Certificate?>?, authType: String?) {
-                            // Do nothing
-                        }
+                @Throws(CertificateException::class)
+                override fun checkClientTrusted(chain: Array<X509Certificate?>?, authType: String?) {
+                    // Do nothing
+                }
 
-                        @Throws(CertificateException::class)
-                        override fun checkServerTrusted(chain: Array<X509Certificate?>?, authType: String?) {
-                            // Do nothing
-                        }
+                @Throws(CertificateException::class)
+                override fun checkServerTrusted(chain: Array<X509Certificate?>?, authType: String?) {
+                    // Do nothing
+                }
 
-                        override fun getAcceptedIssuers(): Array<X509Certificate?>? {
-                            return arrayOf()
-                        }
-                    }
+                override fun getAcceptedIssuers(): Array<X509Certificate?>? {
+                    return arrayOf()
+                }
+            }
             )
 
         }

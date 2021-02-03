@@ -1,9 +1,9 @@
 package com.datnq.stack.overflow.users.core
 
 import androidx.annotation.CallSuper
+import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.datnq.library.utilities.LoggerUtil
-import com.datnq.stack.overflow.users.hotel.GiHotelApplication
-import com.datnq.stack.overflow.users.hotel.R
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 
 /**
@@ -29,7 +29,7 @@ abstract class BasePresenter<V : BaseView> {
 
     @CallSuper
     fun unbindView() {
-        GiHotelApplication.compositeDisposable().clear()
+        CompositeDisposable().clear()
         mView = null
     }
 
@@ -38,9 +38,9 @@ abstract class BasePresenter<V : BaseView> {
             return Consumer { throwable ->
                 LoggerUtil.e(BasePresenter::class.java.simpleName, "getNetErrorConsumer()", throwable)
                 v.showErrorDialog(if (Utilities.isOnline()) {
-                    R.string.general_error
+                    R.string.service_response_error_no_code
                 } else {
-                    R.string.internet_connection_fail
+                    R.string.error_network
                 })
             }
         }

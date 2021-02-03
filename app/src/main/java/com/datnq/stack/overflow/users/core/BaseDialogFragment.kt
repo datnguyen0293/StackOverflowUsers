@@ -1,21 +1,13 @@
 package com.datnq.stack.overflow.users.core
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.annotation.LayoutRes
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
-import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.datnq.stack.overflow.users.hotel.R
+import com.datnq.stack.overflow.users.R
+import dagger.android.support.DaggerAppCompatDialogFragment
 
-abstract class BaseDialogFragment: AppCompatDialogFragment() {
-
-    @LayoutRes abstract fun getLayoutResourceId(): Int
+abstract class BaseDialogFragment: DaggerAppCompatDialogFragment() {
 
     fun activity(): BaseActivity {
         return activity as BaseActivity
@@ -37,12 +29,6 @@ abstract class BaseDialogFragment: AppCompatDialogFragment() {
             dialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(it, R.drawable.rounded_dialog))
         }
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-    }
-
-    override fun onCreateView(@NonNull inflater: LayoutInflater, @Nullable container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(getLayoutResourceId(), container, false)
-        super.onCreateView(inflater, container, savedInstanceState)
-        return rootView
     }
 
 }

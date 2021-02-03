@@ -24,6 +24,7 @@ buildscript {
         advancedRecyclerView = "0.11.0@aar"
         supportLibraryVer = "1.0.0"
         daggerVer = "2.31.2"
+        viewPagerTransform = "2.0.24"
     }
     repositories {
         google()

@@ -1,17 +1,8 @@
 package com.datnq.stack.overflow.users.core
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
+import dagger.android.support.DaggerFragment
 
-abstract class BaseFragment: Fragment(), BaseView {
-
-    protected lateinit var mView: View
-
-    @LayoutRes protected abstract fun getLayoutResourceId(): Int
+abstract class BaseFragment: DaggerFragment(), BaseView {
 
     fun activity(): BaseActivity {
         return activity as BaseActivity
@@ -43,11 +34,6 @@ abstract class BaseFragment: Fragment(), BaseView {
 
     override fun showErrorDialog(errorMessageStringResourceId: Int) {
         activity().showErrorDialog(errorMessageStringResourceId)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mView = inflater.inflate(getLayoutResourceId(), container, false)
-        return mView
     }
 
     override fun onDestroyView() {
