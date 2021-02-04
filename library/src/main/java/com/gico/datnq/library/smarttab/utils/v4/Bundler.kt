@@ -150,7 +150,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param key   a String, or null
      * @param value an array of Parcelable objects, or null
      */
-    fun putParcelableArray(key: String?, value: Array<Parcelable?>?): Bundler {
+    fun putParcelableArray(key: String?, value: Array<Parcelable>): Bundler {
         bundle.putParcelableArray(key, value)
         return this
     }
@@ -164,7 +164,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param value an ArrayList of Parcelable objects, or null
      */
     fun putParcelableArrayList(key: String?,
-                               value: ArrayList<out Parcelable?>?): Bundler {
+                               value: ArrayList<out Parcelable>): Bundler {
         bundle.putParcelableArrayList(key, value)
         return this
     }
@@ -178,7 +178,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param value a SparseArray of Parcelable objects, or null
      */
     fun putSparseParcelableArray(key: String?,
-                                 value: SparseArray<out Parcelable?>?): Bundler {
+                                 value: SparseArray<out Parcelable>): Bundler {
         bundle.putSparseParcelableArray(key, value)
         return this
     }
@@ -190,7 +190,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param key   a String, or null
      * @param value an ArrayList<Integer> object, or null
     </Integer></Integer> */
-    fun putIntegerArrayList(key: String?, value: ArrayList<Int?>?): Bundler {
+    fun putIntegerArrayList(key: String?, value: ArrayList<Int>): Bundler {
         bundle.putIntegerArrayList(key, value)
         return this
     }
@@ -202,7 +202,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param key   a String, or null
      * @param value an ArrayList<String> object, or null
     </String></String> */
-    fun putStringArrayList(key: String?, value: ArrayList<String?>?): Bundler {
+    fun putStringArrayList(key: String?, value: ArrayList<String>): Bundler {
         bundle.putStringArrayList(key, value)
         return this
     }
@@ -215,7 +215,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param value an ArrayList<CharSequence> object, or null
     </CharSequence></CharSequence> */
     @TargetApi(8)
-    fun putCharSequenceArrayList(key: String?, value: ArrayList<CharSequence?>?): Bundler {
+    fun putCharSequenceArrayList(key: String?, value: ArrayList<CharSequence>): Bundler {
         bundle.putCharSequenceArrayList(key, value)
         return this
     }
@@ -288,7 +288,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param value a CharSequence array object, or null
      */
     @TargetApi(8)
-    fun putCharSequenceArray(key: String?, value: Array<CharSequence?>?): Bundler {
+    fun putCharSequenceArray(key: String?, value: Array<CharSequence>): Bundler {
         bundle.putCharSequenceArray(key, value)
         return this
     }
@@ -441,7 +441,7 @@ class Bundler private constructor(b: Bundle?) {
      * @param key   a String, or null
      * @param value a String array object, or null
      */
-    fun putStringArray(key: String?, value: Array<String?>?): Bundler {
+    fun putStringArray(key: String?, value: Array<String>): Bundler {
         bundle.putStringArray(key, value)
         return this
     }

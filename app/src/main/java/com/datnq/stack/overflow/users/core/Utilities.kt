@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 class Utilities {
     companion object {
         @JvmStatic
@@ -176,7 +175,7 @@ class Utilities {
         @JvmStatic
         @Throws(IOException::class)
         fun toBytes(imageUrl: String): ByteArray {
-            val bitmap = Picasso.Builder(GlobalApplication.getInstance()).build().load(imageUrl).get()
+            val bitmap = Picasso.get().load(imageUrl).get()
             val stream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             val byteArray: ByteArray = stream.toByteArray()

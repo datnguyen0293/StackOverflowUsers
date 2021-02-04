@@ -8,6 +8,6 @@ import com.datnq.stack.overflow.users.core.BaseView
  * @since 2019 Sep 13
  */
 interface GetAllUsersView : BaseView {
-    fun onGetAllUsers(userItemList: List<UserItem?>?)
+    fun onGetAllUsers(userItemList: ArrayList<UserItem>)
     fun onNoUsers()
 }

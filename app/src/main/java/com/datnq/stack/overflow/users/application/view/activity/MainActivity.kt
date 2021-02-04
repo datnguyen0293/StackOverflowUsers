@@ -1,82 +1,112 @@
 package com.datnq.stack.overflow.users.application.view.activity
 
-import android.view.View
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
+import android.graphics.PorterDuff
+import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.ToxicBakery.viewpager.transforms.AccordionTransformer
-import java.util.*
+import com.datnq.stack.overflow.users.R
+import com.datnq.stack.overflow.users.application.view.adapter.UsersPagerAdapter
+import com.datnq.stack.overflow.users.application.view.fragment.AllUsersFragment
+import com.datnq.stack.overflow.users.application.view.fragment.FavoriteUsersFragment
+import com.datnq.stack.overflow.users.core.BaseActivity
+import com.datnq.stack.overflow.users.databinding.ActivityMainBinding
+import com.datnq.stack.overflow.users.databinding.TabItemBinding
+import com.google.android.material.tabs.TabLayout
+import javax.inject.Inject
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class MainActivity : BaseActivity(R.layout.activity_main) {
-    @BindView(R.id.tab_layout)
-    var mTabLayout: TabLayout? = null
-
-    @BindView(R.id.view_pager)
-    var mViewPager: ViewPager? = null
+class MainActivity : BaseActivity() {
 
     @Inject
-    var mAllUsersFragment: AllUsersFragment? = null
-
+    lateinit var mAllUsersFragment: AllUsersFragment
     @Inject
-    var mFavoriteUsersFragment: FavoriteUsersFragment? = null
-    protected fun onCreate(savedInstanceState: Bundle?) {
+    lateinit var mFavoriteUsersFragment: FavoriteUsersFragment
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupViewPager()
         setSelectedTab(0)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun setupViewPager() {
-        val mPagerAdapter = UsersPagerAdapter(fragmentManager())
+        val mPagerAdapter = UsersPagerAdapter(supportFragmentManager)
         mPagerAdapter.addFragment(mAllUsersFragment, getString(R.string.all))
         mPagerAdapter.addFragment(mFavoriteUsersFragment, getString(R.string.favorite))
-        mViewPager.setAdapter(mPagerAdapter)
-        mViewPager.setPageTransformer(true, AccordionTransformer())
-        mTabLayout.setupWithViewPager(mViewPager, true)
-        val homeTabView: View = getLayoutInflater().inflate(R.layout.tab_item, mTabLayout, false)
-        (homeTabView.findViewById<View>(R.id.icon) as AppCompatImageView).setImageResource(R.drawable.ic_home)
-        (homeTabView.findViewById<View>(R.id.text) as AppCompatTextView).setText(getString(R.string.all))
-        Objects.requireNonNull(mTabLayout.getTabAt(0)).setCustomView(homeTabView)
-        val favoriteTabView: View =
-            getLayoutInflater().inflate(R.layout.tab_item, mTabLayout, false)
-        (favoriteTabView.findViewById<View>(R.id.icon) as AppCompatImageView).setImageResource(R.drawable.ic_favorite)
-        (favoriteTabView.findViewById<View>(R.id.text) as AppCompatTextView).setText(getString(R.string.favorite))
-        Objects.requireNonNull(mTabLayout.getTabAt(1)).setCustomView(favoriteTabView)
-        mTabLayout.addOnTabSelectedListener(object :
-            TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
+        binding.viewPager.adapter = mPagerAdapter
+        binding.viewPager.setPageTransformer(true, AccordionTransformer())
+        binding.tabLayout.setupWithViewPager(binding.viewPager, true)
+        val homeTabView = TabItemBinding.inflate(layoutInflater, binding.tabLayout, false)
+        homeTabView.imvIcon.setImageResource(R.drawable.ic_home)
+        homeTabView.text.text = getString(R.string.all)
+        binding.tabLayout.getTabAt(0)?.customView = homeTabView.root
+        val favoriteTabView = TabItemBinding.inflate(layoutInflater, binding.tabLayout, false)
+        favoriteTabView.imvIcon.setImageResource(R.drawable.ic_favorite)
+        favoriteTabView.text.text = getString(R.string.favorite)
+        binding.tabLayout.getTabAt(1)?.customView = favoriteTabView.root
+        binding.tabLayout.addOnTabSelectedListener(object :
+            TabLayout.ViewPagerOnTabSelectedListener(binding.viewPager) {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 super.onTabSelected(tab)
-                setSelectedTab(tab.getPosition())
-                mPagerAdapter.getItem(tab.getPosition()).onFragmentResume()
+                setSelectedTab(tab.position)
+                mPagerAdapter.getItem(tab.position).onFragmentResume()
             }
         })
     }
 
     private fun setSelectedTab(position: Int) {
-        val size: Int = mTabLayout.getTabCount()
-        for (i in 0 until size) {
-            val tab: TabLayout.Tab = mTabLayout.getTabAt(i)
-            if (tab != null) {
-                val view: View = tab.getCustomView()
-                if (view != null) {
-                    (view.findViewById<View>(R.id.icon) as AppCompatImageView).setColorFilter(
-                        ContextCompat.getColor(
-                            activity(),
-                            if (i == position) R.color.red else R.color.grey
-                        ),
-                        PorterDuff.Mode.SRC_IN
-                    )
-                    (view.findViewById<View>(R.id.text) as AppCompatTextView).setTextColor(
-                        ContextCompat.getColor(
-                            activity(),
-                            if (i == position) R.color.red else R.color.grey
-                        )
-                    )
-                }
+        when (position) {
+            0 -> {
+                val homeTabView =
+                    TabItemBinding.inflate(layoutInflater, binding.tabLayout, false)
+                homeTabView.imvIcon.setImageResource(R.drawable.ic_home)
+                homeTabView.imvIcon.setColorFilter(
+                    ContextCompat.getColor(this, R.color.red),
+                    PorterDuff.Mode.SRC_IN
+                )
+                homeTabView.text.setTextColor(ContextCompat.getColor(this, R.color.red))
+                homeTabView.text.text = getString(R.string.all)
+                binding.tabLayout.getTabAt(0)?.customView = homeTabView.root
+                val favoriteTabView =
+                    TabItemBinding.inflate(layoutInflater, binding.tabLayout, false)
+                favoriteTabView.imvIcon.setImageResource(R.drawable.ic_favorite)
+                favoriteTabView.imvIcon.setColorFilter(
+                    ContextCompat.getColor(this, R.color.grey),
+                    PorterDuff.Mode.SRC_IN
+                )
+                favoriteTabView.text.text = getString(R.string.favorite)
+                favoriteTabView.text.setTextColor(ContextCompat.getColor(this, R.color.grey))
+                binding.tabLayout.getTabAt(1)?.customView = favoriteTabView.root
+            }
+            1 -> {
+                val homeTabView =
+                    TabItemBinding.inflate(layoutInflater, binding.tabLayout, false)
+                homeTabView.imvIcon.setImageResource(R.drawable.ic_home)
+                homeTabView.imvIcon.setColorFilter(
+                    ContextCompat.getColor(this, R.color.grey),
+                    PorterDuff.Mode.SRC_IN
+                )
+                homeTabView.text.text = getString(R.string.all)
+                homeTabView.text.setTextColor(ContextCompat.getColor(this, R.color.grey))
+                binding.tabLayout.getTabAt(0)?.customView = homeTabView.root
+                val favoriteTabView =
+                    TabItemBinding.inflate(layoutInflater, binding.tabLayout, false)
+                favoriteTabView.imvIcon.setImageResource(R.drawable.ic_favorite)
+                favoriteTabView.imvIcon.setColorFilter(
+                    ContextCompat.getColor(this, R.color.red),
+                    PorterDuff.Mode.SRC_IN
+                )
+                favoriteTabView.text.text = getString(R.string.favorite)
+                favoriteTabView.text.setTextColor(ContextCompat.getColor(this, R.color.red))
+                binding.tabLayout.getTabAt(1)?.customView = favoriteTabView.root
             }
         }
+        binding.root.requestLayout()
     }
+
 }

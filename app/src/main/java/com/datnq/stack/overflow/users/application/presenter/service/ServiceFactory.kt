@@ -25,11 +25,11 @@ class ServiceFactory {
          * @return [ServiceApi]
          */
         @JvmStatic
-        fun create(baseUrl: String): ServiceApi {
+        fun create(): ServiceApi {
             val gson = GsonBuilder().serializeNulls().create()
             val callAdapter = RxJava2CallAdapterFactory.create()
             val retrofitBuilder = Retrofit.Builder()
-            retrofitBuilder.baseUrl(baseUrl)
+            retrofitBuilder.baseUrl(BuildConfig.SERVER_URL)
             retrofitBuilder.client(createHttpClient())
             retrofitBuilder.addConverterFactory(GsonConverterFactory.create(gson))
             retrofitBuilder.addCallAdapterFactory(callAdapter)
@@ -71,16 +71,16 @@ class ServiceFactory {
         private fun trustAllCerts(): Array<X509TrustManager> {
             return arrayOf(object : X509TrustManager {
                 @Throws(CertificateException::class)
-                override fun checkClientTrusted(chain: Array<X509Certificate?>?, authType: String?) {
+                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String?) {
                     // Do nothing
                 }
 
                 @Throws(CertificateException::class)
-                override fun checkServerTrusted(chain: Array<X509Certificate?>?, authType: String?) {
+                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String?) {
                     // Do nothing
                 }
 
-                override fun getAcceptedIssuers(): Array<X509Certificate?>? {
+                override fun getAcceptedIssuers(): Array<X509Certificate> {
                     return arrayOf()
                 }
             }

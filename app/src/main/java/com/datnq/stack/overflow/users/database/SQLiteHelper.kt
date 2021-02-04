@@ -35,15 +35,17 @@ class SQLiteHelper(context: Context) :
             LoggerUtil.e(SQLiteHelper::class.java.simpleName, "getFavoriteUsers()", e)
         } finally {
             cursor?.close()
+            database.endTransaction()
             database.close()
         }
         return userItemList
     }
 
-    @Throws(IOException::class)
+    @Throws(Exception::class)
     fun updateFavoriteUsers(userItem: UserItem) {
         //Open connection to write data
         val database = writableDatabase
+        database.beginTransaction()
         val cursor = database.rawQuery(Database.selectByCondition(userItem.userId), null)
         if (cursor.count > 0) {
             database.delete(
@@ -56,7 +58,9 @@ class SQLiteHelper(context: Context) :
             // Inserting Row
             database.insert(Database.TABLE_NAME, null, values)
         }
+        database.setTransactionSuccessful()
         cursor.close()
+        database.endTransaction()
         database.close() // Closing database connection
     }
 

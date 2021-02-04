@@ -1,5 +1,6 @@
 package com.datnq.stack.overflow.users.application.presenter
 
+import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.UserItem
 import com.datnq.stack.overflow.users.application.presenter.service.ServiceCall
 import com.datnq.stack.overflow.users.application.view.GetAllUsersView
@@ -14,44 +15,40 @@ import java.util.*
 class AllUsersPresenter(private val services: ServiceCall, private val compositeDisposable: CompositeDisposable) :
     BasePresenter<GetAllUsersView>() {
     fun getListUser(page: Int, pageSize: Int, site: String?, creation: String?, sort: String?) {
-        view()?.showLoadingDialog()
-        compositeDisposable.add(services.getListUsers(page, pageSize, site, creation, sort, object : ServiceCall.ApiCallback {
-            override fun responseSucceed(obj: Any?) {
-                TODO("Not yet implemented")
-            }
+        view()?.showLoadingDialog(R.string.load_data, R.string.processing)
+        compositeDisposable.add(
+            services.getListUsers(
+                page,
+                pageSize,
+                site,
+                creation,
+                sort,
+                object : ServiceCall.ApiCallback {
+                    override fun responseSucceed(obj: Any?) {
+                        if ((obj as List<*>).isNotEmpty()) {
+                            val userItemList: ArrayList<UserItem> = ArrayList<UserItem>()
+                            for (o in obj) {
+                                userItemList.add(o as UserItem)
+                            }
+                            view()?.onGetAllUsers(userItemList)
+                        } else {
+                            view()?.onNoUsers()
+                        }
+                        view()?.hideLoadingDialog()
+                    }
 
-            override fun responseFail(errorMessage: String?) {
-                TODO("Not yet implemented")
-            }
+                    override fun responseFail(errorMessage: String?) {
+                        view()?.onNoUsers()
+                        view()?.hideLoadingDialog()
+                    }
 
-            override fun callbackFail(throwable: Throwable?) {
-                TODO("Not yet implemented")
-            }
-//                fun responseSucceed(obj: Any?) {
-//                    if (!(obj as List<*>).isEmpty()) {
-//                        val userItemList: MutableList<UserItem> = ArrayList<UserItem>()
-//                        for (o in obj) {
-//                            userItemList.add(o as UserItem)
-//                        }
-//                        Objects.requireNonNull(view()).onGetAllUsers(userItemList)
-//                    } else {
-//                        Objects.requireNonNull(view()).onNoUsers()
-//                    }
-//                    Objects.requireNonNull(view()).hideLoadingDialog()
-//                }
-//
-//            fun responseFail(errorMessage: String?) {
-//                    Objects.requireNonNull(view()).onNoUsers()
-//                    Objects.requireNonNull(view()).hideLoadingDialog()
-//                }
-//
-//                fun callbackFail(throwable: Throwable?) {
-//                    Objects.requireNonNull(view()).onNoUsers()
-//                    Objects.requireNonNull(view()).hideLoadingDialog()
-//                    getNetErrorConsumer(throwable)
-//                }
-//            }))
-        }))
+                    override fun callbackFail(throwable: Throwable?) {
+                        view()?.onNoUsers()
+                        view()?.hideLoadingDialog()
+                        getErrorConsumer()
+                    }
+                })
+        )
     }
 
 }

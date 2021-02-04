@@ -60,15 +60,14 @@ class UserItem : Parcelable {
         dest.writeString(location)
     }
 
-    companion object {
-        val CREATOR: Parcelable.Creator<UserItem> = object : Parcelable.Creator<UserItem> {
-            override fun createFromParcel(parcel: Parcel): UserItem {
-                return UserItem(parcel)
-            }
+    companion object CREATOR : Parcelable.Creator<UserItem> {
+        override fun createFromParcel(parcel: Parcel): UserItem {
+            return UserItem(parcel)
+        }
 
-            override fun newArray(size: Int): Array<UserItem> {
-                return Array(size) { UserItem() }
-            }
+        override fun newArray(size: Int): Array<UserItem?> {
+            return arrayOfNulls(size)
         }
     }
+
 }

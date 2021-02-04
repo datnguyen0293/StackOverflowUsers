@@ -1,50 +1,45 @@
 package com.datnq.stack.overflow.users.application.view.adapter
 
-import com.datnq.stack.overflow.users.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.datnq.stack.overflow.users.application.model.Reputation
+import com.datnq.stack.overflow.users.application.view.adapter.viewholder.ReputationViewHolder
+import com.datnq.stack.overflow.users.core.BaseRecyclerViewAdapter
+import com.datnq.stack.overflow.users.core.Utilities
+import com.datnq.stack.overflow.users.databinding.LayoutReputationItemBinding
 import java.util.*
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class ReputationAdapter : BaseRecyclerViewAdapter<Reputation?, ReputationViewHolder?>() {
-    val layoutResourceId: Int
-        get() = R.layout.layout_reputation_item
-
-    fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ReputationViewHolder {
-        return ReputationViewHolder(getView(viewGroup))
+class ReputationAdapter : BaseRecyclerViewAdapter<Reputation, ReputationViewHolder>() {
+   
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ReputationViewHolder {
+        return ReputationViewHolder(LayoutReputationItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false))
     }
 
-    fun onBindViewHolder(holder: ReputationViewHolder, i: Int) {
-        val data: Reputation = getItemAt(i)
-        if (data != null) {
-            holder.mTvChange.setText(
-                java.lang.String.format(
-                    Locale.getDefault(),
-                    "Change: %d",
-                    data.getReputationChange()
-                )
+    override fun onBindViewHolder(holder: ReputationViewHolder, i: Int) {
+        getItemAt(i)?.let {
+            holder.mTvChange.text = String.format(
+                Locale.getDefault(),
+                "Change: %d",
+                it.reputationChange
             )
-            holder.mTvCreateAt.setText(
-                java.lang.String.format(
-                    Locale.getDefault(),
-                    "Create At: %s",
-                    Utils.formatDate(data.getCreationDate())
-                )
+            holder.mTvCreateAt.text = String.format(
+                Locale.getDefault(),
+                "Create At: %s",
+                Utilities.formatDate(it.creationDate)
             )
-            holder.mTvReputationType.setText(
-                String.format(
-                    Locale.getDefault(),
-                    "Type: %s",
-                    if (data.getReputationHistoryType() != null) data.getReputationHistoryType() else ""
-                )
+            holder.mTvReputationType.text = String.format(
+                Locale.getDefault(),
+                "Type: %s",
+                it.reputationHistoryType
             )
-            holder.mTvPostId.setText(
-                java.lang.String.format(
-                    Locale.getDefault(),
-                    "Post ID: %d",
-                    data.getPostId()
-                )
+            holder.mTvPostId.text = String.format(
+                Locale.getDefault(),
+                "Post ID: %d",
+                it.postId
             )
         }
     }

@@ -8,6 +8,6 @@ import com.datnq.stack.overflow.users.core.BaseView
  * @since 2019 Sep 13
  */
 interface GetReputationView : BaseView {
-    fun onGetReputations(reputationList: List<Reputation?>?)
+    fun onGetReputations(reputationList: ArrayList<Reputation>)
     fun onNoReputations()
 }

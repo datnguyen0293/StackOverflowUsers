@@ -4,6 +4,10 @@ import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment: DaggerFragment(), BaseView {
 
+    open fun onFragmentResume(){
+        // For overriding
+    }
+
     fun activity(): BaseActivity {
         return activity as BaseActivity
     }

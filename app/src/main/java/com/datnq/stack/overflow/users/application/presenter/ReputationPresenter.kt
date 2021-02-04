@@ -1,14 +1,22 @@
 package com.datnq.stack.overflow.users.application.presenter
 
+import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.Reputation
+import com.datnq.stack.overflow.users.application.presenter.service.ServiceCall
+import com.datnq.stack.overflow.users.application.view.GetReputationView
+import com.datnq.stack.overflow.users.core.BasePresenter
+import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class ReputationPresenter(services: ServiceCall, compositeDisposable: CompositeDisposable) :
-    BasePresenter<GetReputationView?>() {
+class ReputationPresenter(
+    private val services: ServiceCall,
+    private val compositeDisposable: CompositeDisposable
+) :
+    BasePresenter<GetReputationView>() {
     fun getListReputation(
         userId: Long,
         page: Int,
@@ -17,44 +25,40 @@ class ReputationPresenter(services: ServiceCall, compositeDisposable: CompositeD
         creation: String?,
         sort: String?
     ) {
-        Objects.requireNonNull(view()).showLoadingDialog()
-        mDisposable = mServices.getListReputations(
-            userId,
-            page,
-            pageSize,
-            site,
-            creation,
-            sort,
-            object : ApiCallback() {
-                fun responseSucceed(obj: Any) {
-                    if (!(obj as List<*>).isEmpty()) {
-                        val reputationList: MutableList<Reputation> = ArrayList<Reputation>()
-                        for (o in obj) {
-                            reputationList.add(o as Reputation)
+        view()?.showLoadingDialog(R.string.load_data, R.string.processing)
+        compositeDisposable.add(
+            services.getListReputations(
+                userId,
+                page,
+                pageSize,
+                site,
+                creation,
+                sort,
+                object : ServiceCall.ApiCallback {
+                    override fun responseSucceed(obj: Any?) {
+                        if ((obj as List<*>).isNotEmpty()) {
+                            val reputationList: ArrayList<Reputation> = ArrayList<Reputation>()
+                            for (o in obj) {
+                                reputationList.add(o as Reputation)
+                            }
+                            view()?.onGetReputations(reputationList)
+                        } else {
+                            view()?.onNoReputations()
                         }
-                        Objects.requireNonNull(view()).onGetReputations(reputationList)
-                    } else {
-                        Objects.requireNonNull(view()).onNoReputations()
+                        view()?.hideLoadingDialog()
                     }
-                    Objects.requireNonNull(view()).hideLoadingDialog()
-                }
 
-                fun responseFail(errorMessage: String?) {
-                    Objects.requireNonNull(view()).onNoReputations()
-                    Objects.requireNonNull(view()).hideLoadingDialog()
-                }
+                    override fun responseFail(errorMessage: String?) {
+                        view()?.onNoReputations()
+                        view()?.hideLoadingDialog()
+                    }
 
-                fun callbackFail(throwable: Throwable?) {
-                    Objects.requireNonNull(view()).onNoReputations()
-                    Objects.requireNonNull(view()).hideLoadingDialog()
-                    getNetErrorConsumer(throwable)
-                }
-            })
-        mCompositeDisposable.add(mDisposable)
-    }
-
-    init {
-        mServices = services
-        mCompositeDisposable = compositeDisposable
+                    override fun callbackFail(throwable: Throwable?) {
+                        view()?.onNoReputations()
+                        view()?.hideLoadingDialog()
+                        getErrorConsumer()
+                    }
+                })
+        )
     }
 }

@@ -1,6 +1,7 @@
 package com.datnq.stack.overflow.users
 
 import androidx.multidex.MultiDex
+import com.datnq.stack.overflow.users.di.components.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 
@@ -22,6 +23,6 @@ class GlobalApplication : DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        TODO("Not yet implemented")
+        return DaggerApplicationComponent.builder().application(this).build()
     }
 }

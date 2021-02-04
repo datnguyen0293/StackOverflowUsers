@@ -1,65 +1,60 @@
 package com.datnq.stack.overflow.users.application.view.adapter
 
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import com.datnq.stack.overflow.users.R
+import com.datnq.stack.overflow.users.application.model.UserItem
+import com.datnq.stack.overflow.users.application.view.adapter.viewholder.UsersViewHolder
+import com.datnq.stack.overflow.users.application.view.listener.UsersListener
+import com.datnq.stack.overflow.users.core.BaseRecyclerViewAdapter
+import com.datnq.stack.overflow.users.core.Utilities
+import com.datnq.stack.overflow.users.databinding.LayoutUserItemBinding
 import java.util.*
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 12
  */
-class FavoriteUsersAdapter : BaseRecyclerViewAdapter<UserItem?, UsersViewHolder?>() {
-    private var mListener: UsersListener? = null
-    fun setListener(listener: UsersListener?) {
-        mListener = listener
-    }
+class FavoriteUsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersViewHolder>() {
+    var listener: UsersListener? = null
 
     private fun bindData(holder: UsersViewHolder, data: UserItem) {
-        val bookmarked: Drawable =
-            ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_favorite_on)
-        holder.mBtnBookmark.setImageDrawable(bookmarked)
-        holder.mImageAvatar.setImageBitmap(data.getUserAvatarBitmap())
-        holder.mBtnBookmark.setImageDrawable(bookmarked)
-        holder.mTvUserName.setText(if (data.getUserName() != null) data.getUserName() else "")
-        holder.mTvLocation.setText(
-            String.format(
-                Locale.getDefault(),
-                "Location: %s",
-                if (data.getLocation() != null) data.getLocation() else ""
-            )
+        holder.mBtnBookmark.setImageResource(R.drawable.ic_favorite_on)
+        holder.mImageAvatar.setImageBitmap(data.userAvatarBitmap)
+        holder.mTvUserName.text = data.userName
+        holder.mTvLocation.text = String.format(
+            Locale.getDefault(),
+            "Location: %s",
+            data.location
         )
-        holder.mTvLastAccessDate.setText(
-            java.lang.String.format(
-                Locale.getDefault(),
-                "Last access date: %n%s",
-                Utils.formatDate(data.getLastAccessDate())
-            )
+        holder.mTvLastAccessDate.text = java.lang.String.format(
+            Locale.getDefault(),
+            "Last access date: %n%s",
+            Utilities.formatDate(data.lastAccessDate)
         )
-        holder.mTvReputation.setText(
-            java.lang.String.format(
-                Locale.getDefault(),
-                "Reputation: %d",
-                data.getReputation()
+        holder.mTvReputation.text = java.lang.String.format(
+            Locale.getDefault(),
+            "Reputation: %d",
+            data.reputation
+        )
+    }
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): UsersViewHolder {
+        return UsersViewHolder(
+            LayoutUserItemBinding.inflate(
+                LayoutInflater.from(viewGroup.context),
+                viewGroup,
+                false
             )
         )
     }
 
-    val layoutResourceId: Int
-        get() = R.layout.layout_user_item
-
-    fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): UsersViewHolder {
-        return UsersViewHolder(getView(viewGroup))
-    }
-
-    fun onBindViewHolder(holder: UsersViewHolder, i: Int) {
-        val data: UserItem = getItemAt(i)
-        if (data != null) {
-            bindData(holder, data)
-            holder.mBtnBookmark.setOnClickListener(View.OnClickListener { v: View? ->
-                if (mListener != null) {
-                    mListener.saveAsFavorite(data)
-                }
-            })
+    override fun onBindViewHolder(holder: UsersViewHolder, i: Int) {
+        getItemAt(i)?.let {
+            bindData(holder, it)
+            holder.mBtnBookmark.setOnClickListener {
+                getItemAt(i)?.let { d -> listener?.saveAsFavorite(d) }
+            }
         }
     }
 }

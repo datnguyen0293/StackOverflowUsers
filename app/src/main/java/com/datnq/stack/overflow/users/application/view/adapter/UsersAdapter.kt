@@ -1,34 +1,41 @@
 package com.datnq.stack.overflow.users.application.view.adapter
 
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import com.datnq.stack.overflow.users.R
+import com.datnq.stack.overflow.users.application.model.UserItem
+import com.datnq.stack.overflow.users.application.view.adapter.viewholder.UsersViewHolder
+import com.datnq.stack.overflow.users.application.view.listener.UsersListener
+import com.datnq.stack.overflow.users.core.BaseRecyclerViewAdapter
+import com.datnq.stack.overflow.users.core.Utilities
+import com.datnq.stack.overflow.users.databinding.LayoutUserItemBinding
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 12
  */
-class UsersAdapter : BaseRecyclerViewAdapter<UserItem?, UsersViewHolder?>() {
-    private var mListener: UsersListener? = null
-    private var mListFavoriteUsers: MutableList<UserItem>? = null
-    fun setListener(mListener: UsersListener?) {
-        this.mListener = mListener
-    }
+class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersViewHolder>() {
+    private var listener: UsersListener? = null
+    private var listFavoriteUsers: ArrayList<UserItem> = ArrayList()
 
-    fun setListFavoriteUsers(listFavoriteUsers: List<UserItem>?) {
-        if (mListFavoriteUsers == null) {
-            mListFavoriteUsers = ArrayList<UserItem>()
-        } else {
-            mListFavoriteUsers!!.clear()
-        }
-        mListFavoriteUsers!!.addAll(listFavoriteUsers!!)
+    fun setListFavoriteUsers(list: ArrayList<UserItem>) {
+        listFavoriteUsers.clear()
+        listFavoriteUsers.addAll(list)
         notifyDataSetChanged()
     }
 
+    fun setListener(mListener: UsersListener?) {
+        this.listener = mListener
+    }
+
     private fun isFavorite(userItem: UserItem): Boolean {
-        if (mListFavoriteUsers != null && !mListFavoriteUsers!!.isEmpty()) {
-            for (user in mListFavoriteUsers!!) {
-                if (user.getUserId() === userItem.getUserId()) {
+        if (listFavoriteUsers.isNotEmpty()) {
+            for (user in listFavoriteUsers) {
+                if (user.userId == userItem.userId) {
                     return true
                 }
             }
@@ -37,59 +44,47 @@ class UsersAdapter : BaseRecyclerViewAdapter<UserItem?, UsersViewHolder?>() {
     }
 
     private fun bindData(holder: UsersViewHolder, data: UserItem) {
-        val bookmarked: Drawable =
-            ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_favorite_on)
-        val unBookmarked: Drawable =
-            ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_favorite)
-        holder.mBtnBookmark.setImageDrawable(unBookmarked)
-        Picasso.Builder(holder.itemView.getContext()).build().load(data.getUserAvatar())
+        holder.mBtnBookmark.setImageResource(R.drawable.ic_favorite)
+        Picasso.Builder(holder.itemView.context).build().load(data.userAvatar)
             .memoryPolicy(MemoryPolicy.NO_CACHE).fit().into(holder.mImageAvatar)
-        holder.mBtnBookmark.setImageDrawable(if (isFavorite(data)) bookmarked else unBookmarked)
-        holder.mTvUserName.setText(if (data.getUserName() != null) data.getUserName() else "")
-        holder.mTvLocation.setText(
-            String.format(
-                Locale.getDefault(),
-                "Location: %s",
-                if (data.getLocation() != null) data.getLocation() else ""
-            )
+        holder.mBtnBookmark.setImageResource(if (isFavorite(data)) R.drawable.ic_favorite_on else R.drawable.ic_favorite)
+        holder.mTvUserName.text = data.userName
+        holder.mTvLocation.text = String.format(
+            Locale.getDefault(),
+            "Location: %s",
+            data.location
         )
-        holder.mTvLastAccessDate.setText(
-            java.lang.String.format(
-                Locale.getDefault(),
-                "Last access date: %n%s",
-                Utils.formatDate(data.getLastAccessDate())
-            )
+        holder.mTvLastAccessDate.text = java.lang.String.format(
+            Locale.getDefault(),
+            "Last access date: %n%s",
+            Utilities.formatDate(data.lastAccessDate)
         )
-        holder.mTvReputation.setText(
-            java.lang.String.format(
-                Locale.getDefault(),
-                "Reputation: %d",
-                data.getReputation()
+        holder.mTvReputation.text = java.lang.String.format(
+            Locale.getDefault(),
+            "Reputation: %d",
+            data.reputation
+        )
+    }
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): UsersViewHolder {
+        return UsersViewHolder(
+            LayoutUserItemBinding.inflate(
+                LayoutInflater.from(viewGroup.context),
+                viewGroup,
+                false
             )
         )
     }
 
-    val layoutResourceId: Int
-        get() = R.layout.layout_user_item
-
-    fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): UsersViewHolder {
-        return UsersViewHolder(getView(viewGroup))
-    }
-
-    fun onBindViewHolder(holder: UsersViewHolder, i: Int) {
-        val data: UserItem = getItemAt(i)
-        if (data != null) {
-            bindData(holder, data)
-            holder.itemView.setOnClickListener { v ->
-                if (mListener != null) {
-                    mListener.goToDetail(data)
-                }
-            }
-            holder.mBtnBookmark.setOnClickListener(View.OnClickListener { v: View? ->
-                if (mListener != null) {
-                    mListener.saveAsFavorite(data)
-                }
-            })
+    override fun onBindViewHolder(holder: UsersViewHolder, i: Int) {
+        getItemAt(i)?.let {
+            bindData(holder, it)
+        }
+        holder.itemView.setOnClickListener {
+            getItemAt(i)?.let { d -> listener?.goToDetail(d) }
+        }
+        holder.mBtnBookmark.setOnClickListener {
+            getItemAt(i)?.let { d -> listener?.saveAsFavorite(d) }
         }
     }
 }

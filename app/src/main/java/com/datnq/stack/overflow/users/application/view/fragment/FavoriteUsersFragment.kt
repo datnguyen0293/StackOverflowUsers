@@ -1,70 +1,74 @@
 package com.datnq.stack.overflow.users.application.view.fragment
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
-import com.datnq.stack.overflow.users.R
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.datnq.stack.overflow.users.application.model.UserItem
+import com.datnq.stack.overflow.users.application.presenter.FavoriteUsersPresenter
+import com.datnq.stack.overflow.users.application.view.GetFavoriteUsersView
+import com.datnq.stack.overflow.users.application.view.adapter.FavoriteUsersAdapter
+import com.datnq.stack.overflow.users.application.view.listener.UsersListener
+import com.datnq.stack.overflow.users.core.BaseFragment
+import com.datnq.stack.overflow.users.databinding.FragmentFavoriteUsersBinding
+import javax.inject.Inject
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class FavoriteUsersFragment : BaseFragment(R.layout.fragment_favorite_users), GetFavoriteUsersView,
-    UsersListener {
-    @BindView(R.id.rcvUsers)
-    var mRcvUsers: RecyclerView? = null
+class FavoriteUsersFragment : BaseFragment(), GetFavoriteUsersView, UsersListener {
 
-    @BindView(R.id.tvNoData)
-    var mTvNoData: AppCompatTextView? = null
+    @Inject lateinit var mAdapter: FavoriteUsersAdapter
+    @Inject lateinit var mPresenter: FavoriteUsersPresenter
+    private lateinit var binding: FragmentFavoriteUsersBinding
 
-    @Inject
-    var mAdapter: FavoriteUsersAdapter? = null
-
-    @Inject
-    var mPresenter: FavoriteUsersPresenter? = null
     private fun initializeRecyclerView() {
-        mAdapter.setListener(this)
-        mRcvUsers.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(this.activity())
-        mRcvUsers.setLayoutManager(linearLayoutManager)
-        mRcvUsers.setAdapter(mAdapter)
+        mAdapter.listener = this
+        binding.rcvUsers.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(activity())
+        binding.rcvUsers.layoutManager = linearLayoutManager
+        binding.rcvUsers.adapter = mAdapter
     }
 
-    fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = FragmentFavoriteUsersBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
         mPresenter.bindView(this)
     }
 
-    fun onDestroyView() {
-        if (mPresenter != null) {
+    override fun onDestroyView() {
             mPresenter.unbindView()
-            mPresenter = null
-        }
         super.onDestroyView()
     }
 
-    fun onFragmentResume() {
+    override fun onFragmentResume() {
         super.onFragmentResume()
         mPresenter.getFavoriteUsers()
     }
 
-    override fun goToDetail(userItem: UserItem?) {
+    override fun goToDetail(userItem: UserItem) {
         // Don't go to detail
     }
 
-    override fun saveAsFavorite(userItem: UserItem?) {
+    override fun saveAsFavorite(userItem: UserItem) {
         mPresenter.saveFavoriteUser(userItem)
     }
 
-    fun onGetFavoriteUsers(userItemList: List<UserItem?>?) {
-        Utils.runOnUiSafeThread {
-            mTvNoData!!.visibility = View.GONE
-            mAdapter.setListData(userItemList)
-        }
+    override fun onGetFavoriteUsers(userItemList: ArrayList<UserItem>) {
+            binding.tvNoData.visibility = View.GONE
+            mAdapter.setData(userItemList)
     }
 
     override fun onNoFavoriteUsers() {
-        mTvNoData!!.visibility = View.VISIBLE
+        binding.tvNoData.visibility = View.VISIBLE
     }
 
     override fun onSaveFavoriteUsers() {

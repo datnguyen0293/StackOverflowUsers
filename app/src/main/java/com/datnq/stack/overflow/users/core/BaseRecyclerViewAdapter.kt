@@ -39,12 +39,6 @@ abstract class BaseRecyclerViewAdapter<M, V: RecyclerView.ViewHolder>: RecyclerV
         return null
     }
 
-    protected abstract fun getLayoutResourceId(): Int
-
-    protected fun getView(@NonNull parent: ViewGroup): View {
-        return LayoutInflater.from(parent.context).inflate(getLayoutResourceId(), parent, false)
-    }
-
     override fun getItemCount(): Int {
         data?.size?.let { return it }
         return 0

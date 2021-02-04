@@ -11,10 +11,7 @@ import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import java.io.IOException
 import java.util.concurrent.Callable
 
 class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper: SQLiteHelper) {
@@ -43,7 +40,7 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(Consumer { usersResponse: UsersResponse? ->
+            .subscribe({ usersResponse: UsersResponse? ->
                 if (usersResponse != null) {
                     if (usersResponse.listUserItems != null) {
                         callback.responseSucceed(usersResponse.listUserItems)
@@ -51,7 +48,7 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
                         callback.responseFail(null)
                     }
                 }
-            }, Consumer { throwable: Throwable? ->
+            }, { throwable: Throwable? ->
                 if (throwable != null) {
                     callback.callbackFail(throwable)
                 }
@@ -78,7 +75,7 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(Consumer { usersResponse: ReputationResponse? ->
+            .subscribe({ usersResponse: ReputationResponse? ->
                 if (usersResponse != null) {
                     if (usersResponse.listReputationItems != null) {
                         callback.responseSucceed(usersResponse.listReputationItems)
@@ -86,7 +83,7 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
                         callback.responseFail(null)
                     }
                 }
-            }, Consumer { throwable: Throwable? ->
+            }, { throwable: Throwable? ->
                 if (throwable != null) {
                     callback.callbackFail(throwable)
                 }
@@ -94,19 +91,15 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
     }
 
     fun getFavoriteUsers(callback: ApiCallback): Disposable {
-        return Single.defer<List<UserItem?>?>(Callable<SingleSource<List<UserItem?>?>> {
+        return Single.defer<List<UserItem>>(Callable<SingleSource<List<UserItem>>> {
             Single.just(
                 sqLiteHelper.getFavoriteUsers()
             )
-        } as Callable<SingleSource<List<UserItem?>?>>?)
+        } as Callable<SingleSource<List<UserItem>>>?)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ listUsers: List<UserItem?>? ->
-                if (listUsers != null) {
-                    callback.responseSucceed(listUsers)
-                } else {
-                    callback.responseFail(null)
-                }
+            .subscribe({ listUsers: List<UserItem> ->
+                callback.responseSucceed(listUsers)
             }) { throwable: Throwable? ->
                 if (throwable != null) {
                     callback.callbackFail(throwable)
@@ -115,21 +108,21 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
     }
 
     fun saveFavoriteUser(userItem: UserItem, callback: ApiCallback): Disposable {
-        return Completable.fromRunnable(Runnable {
+        return Completable.fromRunnable {
             try {
                 sqLiteHelper.updateFavoriteUsers(userItem)
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 LoggerUtil.e(
                     ServiceCall::class.java.simpleName,
                     "saveFavoriteUser(UserItem userItem)",
                     e
                 )
             }
-        })
+        }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                Action { callback.responseSucceed(null) },
-                Consumer { throwable: Throwable? -> callback.callbackFail(throwable) })
+                { callback.responseSucceed(null) },
+                { throwable: Throwable? -> callback.callbackFail(throwable) })
     }
 }

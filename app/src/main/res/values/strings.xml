@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Stack Overflow Users</string>
     <string name="processing">Processing&#8230;</string>
+    <string name="load_data">Load data</string>
     <string name="user">Stack overflow users</string>
     <string name="no_users">There are no users</string>
     <string name="no_reputations">There are no reputations</string>

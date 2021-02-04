@@ -1,67 +1,72 @@
 package com.datnq.stack.overflow.users.application.presenter
 
+import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.UserItem
+import com.datnq.stack.overflow.users.application.presenter.service.ServiceCall
+import com.datnq.stack.overflow.users.application.view.GetFavoriteUsersView
+import com.datnq.stack.overflow.users.core.BasePresenter
+import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class FavoriteUsersPresenter(services: ServiceCall, compositeDisposable: CompositeDisposable) :
-    BasePresenter<GetFavoriteUsersView?>() {
-    val favoriteUsers: Unit
-        get() {
-            Objects.requireNonNull(view()).showLoadingDialog()
-            mDisposable = mServices.getFavoriteUsers(object : ApiCallback() {
-                fun responseSucceed(obj: Any) {
-                    val userItemList: MutableList<UserItem> = ArrayList<UserItem>()
-                    for (o in obj as List<*>) {
-                        userItemList.add(o as UserItem)
-                    }
-                    if (userItemList.isEmpty()) {
-                        Objects.requireNonNull(view()).onNoFavoriteUsers()
-                    } else {
-                        Objects.requireNonNull(view()).onGetFavoriteUsers(userItemList)
-                    }
-                    Objects.requireNonNull(view()).hideLoadingDialog()
+class FavoriteUsersPresenter(
+    private val services: ServiceCall,
+    private val compositeDisposable: CompositeDisposable
+) :
+    BasePresenter<GetFavoriteUsersView>() {
+    fun getFavoriteUsers() {
+        view()?.showLoadingDialog(R.string.load_data, R.string.processing)
+        compositeDisposable.add(services.getFavoriteUsers(object : ServiceCall.ApiCallback {
+            override fun responseSucceed(obj: Any?) {
+                val userItemList: ArrayList<UserItem> = ArrayList<UserItem>()
+                for (o in obj as List<*>) {
+                    userItemList.add(o as UserItem)
                 }
-
-                fun responseFail(errorMessage: String?) {
-                    Objects.requireNonNull(view()).onNoFavoriteUsers()
-                    Objects.requireNonNull(view()).hideLoadingDialog()
+                if (userItemList.isEmpty()) {
+                    view()?.onNoFavoriteUsers()
+                } else {
+                    view()?.onGetFavoriteUsers(userItemList)
                 }
-
-                fun callbackFail(throwable: Throwable?) {
-                    Objects.requireNonNull(view()).onNoFavoriteUsers()
-                    getNetErrorConsumer(throwable)
-                    Objects.requireNonNull(view()).hideLoadingDialog()
-                }
-            })
-            mCompositeDisposable.add(mDisposable)
-        }
-
-    fun saveFavoriteUser(userItem: UserItem?) {
-        Objects.requireNonNull(view()).showLoadingDialog()
-        mDisposable = mServices.saveFavoriteUser(userItem, object : ApiCallback() {
-            fun responseSucceed(obj: Any?) {
-                Objects.requireNonNull(view()).onSaveFavoriteUsers()
-                Objects.requireNonNull(view()).hideLoadingDialog()
+                view()?.hideLoadingDialog()
             }
 
-            fun responseFail(errorMessage: String?) {
-                // Do nothing
+            override fun responseFail(errorMessage: String?) {
+                view()?.onNoFavoriteUsers()
+                view()?.hideLoadingDialog()
             }
 
-            fun callbackFail(throwable: Throwable?) {
-                getNetErrorConsumer(throwable)
-                Objects.requireNonNull(view()).hideLoadingDialog()
+            override fun callbackFail(throwable: Throwable?) {
+                view()?.onNoFavoriteUsers()
+                getErrorConsumer()
+                view()?.hideLoadingDialog()
             }
-        })
-        mCompositeDisposable.add(mDisposable)
+        }))
     }
 
-    init {
-        mServices = services
-        mCompositeDisposable = compositeDisposable
+    fun saveFavoriteUser(userItem: UserItem) {
+        view()?.showLoadingDialog(R.string.load_data, R.string.processing)
+        compositeDisposable.add(
+            services.saveFavoriteUser(
+                userItem,
+                object : ServiceCall.ApiCallback {
+                    override fun responseSucceed(obj: Any?) {
+                        view()?.onSaveFavoriteUsers()
+                        view()?.hideLoadingDialog()
+                    }
+
+                    override fun responseFail(errorMessage: String?) {
+                        // Do nothing
+                    }
+
+                    override fun callbackFail(throwable: Throwable?) {
+                        getErrorConsumer()
+                        view()?.hideLoadingDialog()
+                    }
+                })
+        )
     }
+
 }

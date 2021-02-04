@@ -8,7 +8,7 @@ import com.datnq.stack.overflow.users.core.BaseView
  * @since 2019 Sep 13
  */
 interface GetFavoriteUsersView : BaseView {
-    fun onGetFavoriteUsers(userItemList: List<UserItem?>?)
+    fun onGetFavoriteUsers(userItemList: ArrayList<UserItem>)
     fun onNoFavoriteUsers()
     fun onSaveFavoriteUsers()
 }
