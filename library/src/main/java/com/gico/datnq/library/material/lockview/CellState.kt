@@ -1,4 +1,4 @@
-package com.datnq.stack.overflow.users.datnq.library.material.lockview
+package com.gico.datnq.library.material.lockview
 
 import android.animation.ValueAnimator
 

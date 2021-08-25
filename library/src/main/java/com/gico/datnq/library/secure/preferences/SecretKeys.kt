@@ -1,4 +1,4 @@
-package com.datnq.stack.overflow.users.datnq.library.secure.preferences
+package com.gico.datnq.library.secure.preferences
 
 import android.util.Base64
 import javax.crypto.SecretKey

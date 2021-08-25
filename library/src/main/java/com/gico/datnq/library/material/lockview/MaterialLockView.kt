@@ -1,4 +1,4 @@
-package com.datnq.stack.overflow.users.datnq.library.material.lockview
+package com.gico.datnq.library.material.lockview
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -18,8 +18,8 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
-import com.datnq.stack.overflow.users.datnq.library.R
-import com.datnq.stack.overflow.users.datnq.library.utilities.LoggerUtil
+import com.gico.datnq.library.R
+import com.gico.datnq.library.utilities.LoggerUtil
 import java.util.*
 import kotlin.math.*
 

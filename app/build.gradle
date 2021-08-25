@@ -56,10 +56,6 @@ android {
         disable "Wakelock"
     }
 
-    dexOptions {
-        preDexLibraries = false
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -82,7 +78,7 @@ dependencies {
     implementation "androidx.cardview:cardview:$cardViewVer"
     implementation "androidx.multidex:multidex:$multidexVer"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVer"
-    implementation "com.github.ybq:Android-SpinKit:$spinKit"
+    implementation "com.github.ybq:Android-SpinKit:$spinKitVer"
     implementation "com.google.android.material:material:$materialVer"
     implementation "com.makeramen:roundedimageview:$roundedImageviewVer"
     implementation "com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:$advancedRecyclerView"
@@ -100,6 +96,8 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Ver"
     implementation "com.squareup.okhttp3:okhttp:$okhttp3Ver"
     implementation "com.google.dagger:dagger-android-support:$daggerVer"
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
     kapt "com.google.dagger:dagger-compiler:$daggerVer"
     kapt "com.google.dagger:dagger-android-processor:$daggerVer"
 }

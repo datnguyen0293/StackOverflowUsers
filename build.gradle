@@ -5,10 +5,10 @@ buildscript {
         buildToolsVer = "30.0.3"
         minSdkVer = 23
         targetSdkVer = 30
-        kotlinVer = "1.4.21"
-        ktxVer = "1.3.2"
-        gradleVer = "4.1.2"
-        rxJavaVer = "2.2.20"
+        kotlinVer = "1.5.21"
+        ktxVer = '1.6.0'
+        gradleVer = '7.0.1'
+        rxJavaVer = '2.2.21'
         rxAndroidVer = "2.1.1"
         okhttpVer = "2.7.5"
         okhttp3Ver = "5.0.0-alpha.2"
@@ -17,18 +17,20 @@ buildscript {
         idlerVer = "0.11.0"
         cardViewVer = "1.0.0"
         multidexVer = "2.0.1"
-        recyclerViewVer = "1.1.0"
-        materialVer = "1.2.1"
-        spinKit = "1.2.0"
+        recyclerViewVer = '1.2.1'
+        materialVer = '1.4.0'
+        spinKitVer = "1.2.0"
         roundedImageviewVer = "2.3.0"
-        advancedRecyclerView = "0.11.0@aar"
+        advancedRecyclerView = "1.0.0"
         supportLibraryVer = "1.0.0"
-        daggerVer = "2.31.2"
+        daggerVer = '2.38.1'
         viewPagerTransform = "2.0.24"
     }
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVer"
@@ -42,7 +44,9 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 }
 

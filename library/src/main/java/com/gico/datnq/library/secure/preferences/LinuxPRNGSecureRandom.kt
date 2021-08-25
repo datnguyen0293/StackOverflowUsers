@@ -1,7 +1,7 @@
-package com.datnq.stack.overflow.users.datnq.library.secure.preferences
+package com.gico.datnq.library.secure.preferences
 
 import android.os.Process
-import com.datnq.stack.overflow.users.datnq.library.utilities.LoggerUtil
+import com.gico.datnq.library.utilities.LoggerUtil
 import java.io.*
 import java.security.SecureRandomSpi
 

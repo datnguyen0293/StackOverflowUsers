@@ -2,7 +2,7 @@ package com.datnq.stack.overflow.users.core
 
 import android.content.Context
 import android.util.Base64
-import com.datnq.stack.overflow.users.datnq.library.secure.preferences.SecurePreferences
+import com.gico.datnq.library.secure.preferences.SecurePreferences
 import java.nio.charset.StandardCharsets
 import java.util.*
 

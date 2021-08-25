@@ -5,7 +5,7 @@ import com.datnq.stack.overflow.users.application.model.UserItem
 import com.datnq.stack.overflow.users.application.model.response.ReputationResponse
 import com.datnq.stack.overflow.users.application.model.response.UsersResponse
 import com.datnq.stack.overflow.users.database.SQLiteHelper
-import com.datnq.stack.overflow.users.datnq.library.utilities.LoggerUtil
+import com.gico.datnq.library.utilities.LoggerUtil
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleSource

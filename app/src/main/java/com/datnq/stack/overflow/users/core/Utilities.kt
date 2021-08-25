@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.datnq.stack.overflow.users.GlobalApplication
 import com.datnq.stack.overflow.users.R
-import com.datnq.stack.overflow.users.datnq.library.utilities.LoggerUtil
+import com.gico.datnq.library.utilities.LoggerUtil
 import com.squareup.picasso.Picasso
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -1,7 +1,6 @@
 package com.datnq.stack.overflow.users.core
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AlertDialog
 import com.datnq.stack.overflow.users.R
@@ -90,16 +89,6 @@ abstract class BaseActivity : DaggerAppCompatActivity(), BaseView {
     override fun startActivity(intent: Intent?) {
         overridePendingTransition(R.anim.fab_in, R.anim.fab_out)
         super.startActivity(intent)
-    }
-
-    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
-        overridePendingTransition(R.anim.fab_in, R.anim.fab_out)
-        super.startActivityForResult(intent, requestCode)
-    }
-
-    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
-        overridePendingTransition(R.anim.fab_in, R.anim.fab_out)
-        super.startActivityForResult(intent, requestCode, options)
     }
 
     override fun finish() {
