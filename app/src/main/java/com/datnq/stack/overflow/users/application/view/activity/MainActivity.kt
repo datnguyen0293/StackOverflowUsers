@@ -16,15 +16,13 @@ import com.datnq.stack.overflow.users.databinding.ActivityMainBinding
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class MainActivity : BaseActivity(), FragmentListener {
+class MainActivity : BaseActivity<ActivityMainBinding>(), FragmentListener {
     
     private var adapter: TabAdapter? = null
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        super.onCreate(savedInstanceState)
         val tabs: ArrayList<Tab> = arrayListOf(
             Tab(R.drawable.ic_home, R.string.all),
             Tab(R.drawable.ic_favorite, R.string.favorite)
@@ -44,7 +42,7 @@ class MainActivity : BaseActivity(), FragmentListener {
         super.onDestroy()
     }
 
-    private fun moveToFragment(fragment: BaseFragment) {
+    private fun moveToFragment(fragment: BaseFragment<*>) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.flContainer, fragment, fragment::class.java.simpleName)
             .commitAllowingStateLoss()

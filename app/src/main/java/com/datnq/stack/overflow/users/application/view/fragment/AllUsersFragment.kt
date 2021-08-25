@@ -25,14 +25,13 @@ import javax.inject.Inject
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class AllUsersFragment : BaseFragment(), GetAllUsersView, GetFavoriteUsersView, UsersListener {
+class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(), GetAllUsersView, GetFavoriteUsersView, UsersListener {
 
     @Inject lateinit var mAllUserPresenter: AllUsersPresenter
     @Inject lateinit var mFavoriteUsersPresenter: FavoriteUsersPresenter
     @Inject lateinit var mAdapter: UsersAdapter
     private var mTotalItems: Long = 0
     private var mPage = 1
-    private lateinit var binding: FragmentAllUsersBinding
 
     /**
      * Initialize RecyclerView
@@ -68,9 +67,8 @@ class AllUsersFragment : BaseFragment(), GetAllUsersView, GetFavoriteUsersView, 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentAllUsersBinding.inflate(inflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,11 +89,6 @@ class AllUsersFragment : BaseFragment(), GetAllUsersView, GetFavoriteUsersView, 
             mAllUserPresenter.unbindView()
             mFavoriteUsersPresenter.unbindView()
         super.onDestroyView()
-    }
-
-    override fun onFragmentResume() {
-        super.onFragmentResume()
-        mFavoriteUsersPresenter.getFavoriteUsers()
     }
 
     override fun onGetAllUsers(userItemList: ArrayList<UserItem>) {

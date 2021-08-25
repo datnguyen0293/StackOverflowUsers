@@ -1,15 +1,18 @@
 package com.datnq.stack.overflow.users.core
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
 import dagger.android.support.DaggerFragment
 
-abstract class BaseFragment: DaggerFragment(), BaseView {
+abstract class BaseFragment<VB: ViewBinding>: DaggerFragment(), BaseView {
 
-    open fun onFragmentResume(){
-        // For overriding
-    }
+    lateinit var binding: VB
 
-    fun activity(): BaseActivity {
-        return activity as BaseActivity
+    fun activity(): BaseActivity<*> {
+        return activity as BaseActivity<*>
     }
 
     override fun showLoadingDialog(title: String, message: String) {
@@ -38,6 +41,10 @@ abstract class BaseFragment: DaggerFragment(), BaseView {
 
     override fun showErrorDialog(errorMessageStringResourceId: Int) {
         activity().showErrorDialog(errorMessageStringResourceId)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return binding.root
     }
 
     override fun onDestroyView() {

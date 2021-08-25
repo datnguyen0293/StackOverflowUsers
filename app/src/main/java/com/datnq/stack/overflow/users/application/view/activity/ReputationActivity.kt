@@ -21,7 +21,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class ReputationActivity : BaseActivity(), GetReputationView {
+class ReputationActivity : BaseActivity<ActivityReputationBinding>(), GetReputationView {
 
     @Inject
     lateinit var mPresenter: ReputationPresenter
@@ -34,14 +34,13 @@ class ReputationActivity : BaseActivity(), GetReputationView {
     private var mUserItem: UserItem? = null
     private var mTotalItems: Long = 0
     private var mPage = 1
-    private lateinit var binding: ActivityReputationBinding
 
     companion object {
         private const val PAGE_SIZE = 30
         private const val ARG_USER_ITEM = "ARG_USER_ITEM"
 
         @JvmStatic
-        fun start(baseFragment: BaseFragment, userItem: UserItem) {
+        fun start(baseFragment: BaseFragment<*>, userItem: UserItem) {
             val starter = Intent(baseFragment.activity(), ReputationActivity::class.java)
             starter.putExtra(ARG_USER_ITEM, userItem)
             baseFragment.startActivity(starter)
@@ -106,9 +105,8 @@ class ReputationActivity : BaseActivity(), GetReputationView {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         binding = ActivityReputationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         binding.layoutUser.btnBookmark.visibility = View.GONE
         initializeRecyclerView()

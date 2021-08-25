@@ -18,11 +18,10 @@ import javax.inject.Inject
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class FavoriteUsersFragment : BaseFragment(), GetFavoriteUsersView, UsersListener {
+class FavoriteUsersFragment : BaseFragment<FragmentFavoriteUsersBinding>(), GetFavoriteUsersView, UsersListener {
 
     @Inject lateinit var mAdapter: FavoriteUsersAdapter
     @Inject lateinit var mPresenter: FavoriteUsersPresenter
-    private lateinit var binding: FragmentFavoriteUsersBinding
 
     private fun initializeRecyclerView() {
         mAdapter.listener = this
@@ -33,9 +32,8 @@ class FavoriteUsersFragment : BaseFragment(), GetFavoriteUsersView, UsersListene
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentFavoriteUsersBinding.inflate(inflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,11 +45,6 @@ class FavoriteUsersFragment : BaseFragment(), GetFavoriteUsersView, UsersListene
     override fun onDestroyView() {
             mPresenter.unbindView()
         super.onDestroyView()
-    }
-
-    override fun onFragmentResume() {
-        super.onFragmentResume()
-        mPresenter.getFavoriteUsers()
     }
 
     override fun goToDetail(userItem: UserItem) {

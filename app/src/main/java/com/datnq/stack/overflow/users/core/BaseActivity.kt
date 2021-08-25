@@ -1,16 +1,24 @@
 package com.datnq.stack.overflow.users.core
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AlertDialog
+import androidx.viewbinding.ViewBinding
 import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.databinding.LayoutLoadingBinding
 import dagger.android.support.DaggerAppCompatActivity
 
-abstract class BaseActivity : DaggerAppCompatActivity(), BaseView {
+abstract class BaseActivity<VB: ViewBinding> : DaggerAppCompatActivity(), BaseView {
 
     private var mLoadingDialog: AlertDialog? = null
     private var mErrorDialog: AlertDialog? = null
+    lateinit var binding: VB
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+    }
 
     @CallSuper
     override fun onDestroy() {
