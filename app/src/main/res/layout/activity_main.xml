@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wrapperView"
     android:layout_width="match_parent"
@@ -8,16 +9,24 @@
     android:orientation="vertical"
     tools:context=".application.view.activity.MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_64"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:minHeight="@dimen/dimen_64"/>
+        android:minHeight="@dimen/dimen_64"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/red"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/red"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.PopupMenu.Large"
+        app:tabTextColor="@color/grey" />
 
-    <FrameLayout
-        android:id="@+id/flContainer"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/tab_layout"

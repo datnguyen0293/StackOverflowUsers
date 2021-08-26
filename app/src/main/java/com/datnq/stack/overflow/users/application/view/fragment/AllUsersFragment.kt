@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.UserItem
@@ -74,6 +73,10 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(), GetAllUsersVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
+        onFragmentResume()
+    }
+
+    override fun onFragmentResume() {
         mAllUserPresenter.bindView(this)
         mFavoriteUsersPresenter.bindView(this)
         mAllUserPresenter.getListUser(

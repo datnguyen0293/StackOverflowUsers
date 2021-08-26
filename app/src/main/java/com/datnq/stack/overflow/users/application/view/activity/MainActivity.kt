@@ -1,61 +1,55 @@
 package com.datnq.stack.overflow.users.application.view.activity
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import com.datnq.stack.overflow.users.R
-import com.datnq.stack.overflow.users.application.model.Tab
-import com.datnq.stack.overflow.users.application.view.adapter.TabAdapter
 import com.datnq.stack.overflow.users.application.view.fragment.AllUsersFragment
 import com.datnq.stack.overflow.users.application.view.fragment.FavoriteUsersFragment
-import com.datnq.stack.overflow.users.application.view.listener.FragmentListener
 import com.datnq.stack.overflow.users.core.BaseActivity
-import com.datnq.stack.overflow.users.core.BaseFragment
+import com.datnq.stack.overflow.users.core.BaseFragmentPagerAdapter
 import com.datnq.stack.overflow.users.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import javax.inject.Inject
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class MainActivity : BaseActivity<ActivityMainBinding>(), FragmentListener {
-    
-    private var adapter: TabAdapter? = null
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    @Inject
+    lateinit var mAllUsersFragment: AllUsersFragment
+    @Inject
+    lateinit var mFavoriteUsersFragment: FavoriteUsersFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-        val tabs: ArrayList<Tab> = arrayListOf(
-            Tab(R.drawable.ic_home, R.string.all),
-            Tab(R.drawable.ic_favorite, R.string.favorite)
-        )
-        adapter = TabAdapter()
-        adapter?.setListener(this)
-        binding.tabLayout.layoutManager = GridLayoutManager(this, 2)
-        binding.tabLayout.setHasFixedSize(true)
-        binding.tabLayout.adapter = adapter
-        adapter?.setData(tabs)
-        moveToFragment(AllUsersFragment())
+        setupViewPager()
+//        setSelectedTab(0)
     }
 
-    override fun onDestroy() {
-        adapter?.setListener(null)
-        adapter = null
-        super.onDestroy()
-    }
-
-    private fun moveToFragment(fragment: BaseFragment<*>) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.flContainer, fragment, fragment::class.java.simpleName)
-            .commitAllowingStateLoss()
-    }
-
-    override fun moveTo(position: Int) {
-        moveToFragment(
-            if (position == 0) {
-                AllUsersFragment()
-            } else {
-                FavoriteUsersFragment()
+    private fun setupViewPager() {
+        val pagerAdapter = BaseFragmentPagerAdapter(this)
+        pagerAdapter.addFragment(mAllUsersFragment)
+        pagerAdapter.addFragment(mFavoriteUsersFragment)
+        binding.viewPager.adapter = pagerAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = getString(if (position == 0) R.string.all else R.string.favorite)
+        }.attach()
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                pagerAdapter.createFragment(tab.position).onFragmentResume()
             }
-        )
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // Do nothing
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // Do nothing
+            }
+        })
     }
 
 }

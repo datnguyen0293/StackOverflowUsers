@@ -11,6 +11,8 @@ abstract class BaseFragment<VB: ViewBinding>: DaggerFragment(), BaseView {
 
     lateinit var binding: VB
 
+    open fun onFragmentResume() {}
+
     fun activity(): BaseActivity<*> {
         return activity as BaseActivity<*>
     }
