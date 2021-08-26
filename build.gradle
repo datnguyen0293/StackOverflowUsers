@@ -5,7 +5,7 @@ buildscript {
         buildToolsVer = "31.0.0"
         minSdkVer = 23
         targetSdkVer = 30
-        kotlinVer = "1.5.21"
+        kotlinVer = "1.5.30"
         ktxVer = '1.6.0'
         gradleVer = '7.0.1'
         rxJavaVer = '2.2.21'
