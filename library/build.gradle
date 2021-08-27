@@ -30,8 +30,3 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$supportLibraryVer"
     implementation "com.google.android.material:material:$materialVer"
 }
-
-repositories {
-    mavenCentral()
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
-}
