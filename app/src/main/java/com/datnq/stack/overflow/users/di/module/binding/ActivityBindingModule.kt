@@ -1,12 +1,10 @@
 package com.datnq.stack.overflow.users.di.module.binding
 
-import com.datnq.stack.overflow.users.GlobalApplication
 import com.datnq.stack.overflow.users.application.view.activity.MainActivity
 import com.datnq.stack.overflow.users.application.view.activity.ReputationActivity
 import com.datnq.stack.overflow.users.di.module.MainActivityModule
 import com.datnq.stack.overflow.users.di.module.ReputaionActivityModule
 import com.datnq.stack.overflow.users.di.scopes.ActivityScope
-import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
