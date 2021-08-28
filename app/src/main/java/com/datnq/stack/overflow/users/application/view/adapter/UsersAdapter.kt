@@ -9,7 +9,6 @@ import com.datnq.stack.overflow.users.application.view.listener.UsersListener
 import com.datnq.stack.overflow.users.core.BaseRecyclerViewAdapter
 import com.datnq.stack.overflow.users.core.Utilities
 import com.datnq.stack.overflow.users.databinding.LayoutUserItemBinding
-import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,7 +45,7 @@ class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersViewHolder>() {
     private fun bindData(holder: UsersViewHolder, data: UserItem) {
         holder.mBtnBookmark.setImageResource(R.drawable.ic_favorite)
         Picasso.Builder(holder.itemView.context).build().load(data.userAvatar)
-            .memoryPolicy(MemoryPolicy.NO_CACHE).fit().into(holder.mImageAvatar)
+            .fit().into(holder.mImageAvatar)
         holder.mBtnBookmark.setImageResource(if (isFavorite(data)) R.drawable.ic_favorite_on else R.drawable.ic_favorite)
         holder.mTvUserName.text = data.userName
         holder.mTvLocation.text = String.format(
