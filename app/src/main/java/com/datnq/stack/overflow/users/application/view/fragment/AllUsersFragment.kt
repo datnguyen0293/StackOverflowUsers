@@ -13,7 +13,6 @@ import com.datnq.stack.overflow.users.application.view.GetAllUsersView
 import com.datnq.stack.overflow.users.application.view.GetFavoriteUsersView
 import com.datnq.stack.overflow.users.application.view.activity.ReputationActivity
 import com.datnq.stack.overflow.users.application.view.adapter.UsersAdapter
-import com.datnq.stack.overflow.users.application.view.listener.UsersListener
 import com.datnq.stack.overflow.users.core.BaseFragment
 import com.datnq.stack.overflow.users.core.RecyclerViewScrollEvent
 import com.datnq.stack.overflow.users.databinding.FragmentAllUsersBinding
@@ -24,7 +23,8 @@ import javax.inject.Inject
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(), GetAllUsersView, GetFavoriteUsersView, UsersListener {
+class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(), GetAllUsersView, GetFavoriteUsersView,
+    UsersAdapter.UsersListener {
 
     @Inject lateinit var mAllUserPresenter: AllUsersPresenter
     @Inject lateinit var mFavoriteUsersPresenter: FavoriteUsersPresenter

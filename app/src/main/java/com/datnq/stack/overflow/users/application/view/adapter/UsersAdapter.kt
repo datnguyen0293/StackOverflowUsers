@@ -2,10 +2,9 @@ package com.datnq.stack.overflow.users.application.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.UserItem
-import com.datnq.stack.overflow.users.application.view.adapter.viewholder.UsersViewHolder
-import com.datnq.stack.overflow.users.application.view.listener.UsersListener
 import com.datnq.stack.overflow.users.core.BaseRecyclerViewAdapter
 import com.datnq.stack.overflow.users.core.Utilities
 import com.datnq.stack.overflow.users.databinding.LayoutUserItemBinding
@@ -17,7 +16,7 @@ import kotlin.collections.ArrayList
  * @author dat nguyen
  * @since 2019 Sep 12
  */
-class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersViewHolder>() {
+class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersAdapter.UsersViewHolder>() {
     private var listener: UsersListener? = null
     private var listFavoriteUsers: ArrayList<UserItem> = ArrayList()
 
@@ -43,22 +42,22 @@ class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersViewHolder>() {
     }
 
     private fun bindData(holder: UsersViewHolder, data: UserItem) {
-        holder.mBtnBookmark.setImageResource(R.drawable.ic_favorite)
+        holder.binding.btnBookmark.setImageResource(R.drawable.ic_favorite)
         Picasso.Builder(holder.itemView.context).build().load(data.userAvatar)
-            .fit().into(holder.mImageAvatar)
-        holder.mBtnBookmark.setImageResource(if (isFavorite(data)) R.drawable.ic_favorite_on else R.drawable.ic_favorite)
-        holder.mTvUserName.text = data.userName
-        holder.mTvLocation.text = String.format(
+            .fit().into(holder.binding.imageAvatar)
+        holder.binding.btnBookmark.setImageResource(if (isFavorite(data)) R.drawable.ic_favorite_on else R.drawable.ic_favorite)
+        holder.binding.tvUserName.text = data.userName
+        holder.binding.tvLocation.text = String.format(
             Locale.getDefault(),
             "Location: %s",
             data.location
         )
-        holder.mTvLastAccessDate.text = java.lang.String.format(
+        holder.binding.tvLastAccessDate.text = java.lang.String.format(
             Locale.getDefault(),
             "Last access date: %n%s",
             Utilities.formatDate(data.lastAccessDate)
         )
-        holder.mTvReputation.text = java.lang.String.format(
+        holder.binding.tvLocation.text = java.lang.String.format(
             Locale.getDefault(),
             "Reputation: %d",
             data.reputation
@@ -82,8 +81,16 @@ class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersViewHolder>() {
         holder.itemView.setOnClickListener {
             getItemAt(i)?.let { d -> listener?.goToDetail(d) }
         }
-        holder.mBtnBookmark.setOnClickListener {
+        holder.binding.btnBookmark.setOnClickListener {
             getItemAt(i)?.let { d -> listener?.saveAsFavorite(d) }
         }
+    }
+
+    data class UsersViewHolder(val binding: LayoutUserItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    interface UsersListener {
+        fun goToDetail(userItem: UserItem)
+        fun saveAsFavorite(userItem: UserItem)
     }
 }

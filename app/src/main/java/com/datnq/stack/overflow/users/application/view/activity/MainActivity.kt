@@ -9,7 +9,6 @@ import com.datnq.stack.overflow.users.core.BaseFragmentPagerAdapter
 import com.datnq.stack.overflow.users.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import javax.inject.Inject
 
 /**
  * @author dat nguyen
@@ -17,22 +16,16 @@ import javax.inject.Inject
  */
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    @Inject
-    lateinit var mAllUsersFragment: AllUsersFragment
-    @Inject
-    lateinit var mFavoriteUsersFragment: FavoriteUsersFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setupViewPager()
-//        setSelectedTab(0)
     }
 
     private fun setupViewPager() {
         val pagerAdapter = BaseFragmentPagerAdapter(this)
-        pagerAdapter.addFragment(mAllUsersFragment)
-        pagerAdapter.addFragment(mFavoriteUsersFragment)
+        pagerAdapter.addFragment(AllUsersFragment())
+        pagerAdapter.addFragment(FavoriteUsersFragment())
         binding.viewPager.adapter = pagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = getString(if (position == 0) R.string.all else R.string.favorite)

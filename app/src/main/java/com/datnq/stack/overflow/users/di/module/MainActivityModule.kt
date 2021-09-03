@@ -1,5 +1,6 @@
 package com.datnq.stack.overflow.users.di.module
 
+import com.datnq.stack.overflow.users.application.view.adapter.UsersAdapter
 import com.datnq.stack.overflow.users.application.view.fragment.AllUsersFragment
 import com.datnq.stack.overflow.users.application.view.fragment.FavoriteUsersFragment
 import com.datnq.stack.overflow.users.di.scopes.ActivityScope
@@ -18,16 +19,11 @@ abstract class MainActivityModule {
     abstract fun favoriteUsersFragment(): FavoriteUsersFragment?
 
     companion object {
-        @Provides
-        @ActivityScope
-        fun provideAllUsersFragment(): AllUsersFragment {
-            return AllUsersFragment()
-        }
 
         @Provides
         @ActivityScope
-        fun provideFavoriteUsersFragment(): FavoriteUsersFragment {
-            return FavoriteUsersFragment()
+        fun provideUsersAdapter(): UsersAdapter {
+            return UsersAdapter()
         }
     }
 }

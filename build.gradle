@@ -7,7 +7,7 @@ buildscript {
         targetSdkVer = 30
         kotlinVer = "1.5.30"
         ktxVer = '1.6.0'
-        gradleVer = '7.0.1'
+        gradleVer = '7.0.2'
         rxJavaVer = '2.2.21'
         rxAndroidVer = "2.1.1"
         okhttpVer = "2.7.5"

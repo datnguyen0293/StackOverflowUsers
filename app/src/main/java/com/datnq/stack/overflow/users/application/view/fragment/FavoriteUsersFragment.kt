@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.datnq.stack.overflow.users.application.model.UserItem
 import com.datnq.stack.overflow.users.application.presenter.FavoriteUsersPresenter
 import com.datnq.stack.overflow.users.application.view.GetFavoriteUsersView
-import com.datnq.stack.overflow.users.application.view.adapter.FavoriteUsersAdapter
-import com.datnq.stack.overflow.users.application.view.listener.UsersListener
+import com.datnq.stack.overflow.users.application.view.adapter.UsersAdapter
 import com.datnq.stack.overflow.users.core.BaseFragment
 import com.datnq.stack.overflow.users.databinding.FragmentFavoriteUsersBinding
 import javax.inject.Inject
@@ -18,13 +17,14 @@ import javax.inject.Inject
  * @author dat nguyen
  * @since 2019 Sep 13
  */
-class FavoriteUsersFragment : BaseFragment<FragmentFavoriteUsersBinding>(), GetFavoriteUsersView, UsersListener {
+class FavoriteUsersFragment : BaseFragment<FragmentFavoriteUsersBinding>(), GetFavoriteUsersView,
+    UsersAdapter.UsersListener {
 
-    @Inject lateinit var mAdapter: FavoriteUsersAdapter
+    @Inject lateinit var mAdapter: UsersAdapter
     @Inject lateinit var mPresenter: FavoriteUsersPresenter
 
     private fun initializeRecyclerView() {
-        mAdapter.listener = this
+        mAdapter.setListener(this)
         binding.rcvUsers.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(activity())
         binding.rcvUsers.layoutManager = linearLayoutManager
