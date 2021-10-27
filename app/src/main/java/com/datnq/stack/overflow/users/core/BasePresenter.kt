@@ -2,7 +2,7 @@ package com.datnq.stack.overflow.users.core
 
 import androidx.annotation.CallSuper
 import com.datnq.stack.overflow.users.R
-import com.gico.datnq.library.utilities.LoggerUtil
+import com.datnq.stack.overflow.users.core.LoggerUtil
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 

@@ -20,30 +20,48 @@ import javax.inject.Inject
 class FavoriteUsersFragment : BaseFragment<FragmentFavoriteUsersBinding>(), GetFavoriteUsersView,
     UsersAdapter.UsersListener {
 
-    @Inject lateinit var mAdapter: UsersAdapter
-    @Inject lateinit var mPresenter: FavoriteUsersPresenter
+    @Inject
+    lateinit var mAdapter: UsersAdapter
+    @Inject
+    lateinit var mPresenter: FavoriteUsersPresenter
 
     private fun initializeRecyclerView() {
+        mAdapter.setScreenName(FavoriteUsersFragment::class.java.simpleName)
         mAdapter.setListener(this)
-        binding.rcvUsers.setHasFixedSize(true)
+        mBinding.rcvUsers.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(activity())
-        binding.rcvUsers.layoutManager = linearLayoutManager
-        binding.rcvUsers.adapter = mAdapter
+        mBinding.rcvUsers.layoutManager = linearLayoutManager
+        mBinding.rcvUsers.adapter = mAdapter
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentFavoriteUsersBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        mBinding = FragmentFavoriteUsersBinding.inflate(inflater, container, false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
         mPresenter.bindView(this)
+        mPresenter.getFavoriteUsers()
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        mPresenter.bindView(this)
+        mPresenter.getFavoriteUsers()
     }
 
     override fun onDestroyView() {
-            mPresenter.unbindView()
+        mPresenter.unbindView()
         super.onDestroyView()
     }
 
@@ -56,15 +74,17 @@ class FavoriteUsersFragment : BaseFragment<FragmentFavoriteUsersBinding>(), GetF
     }
 
     override fun onGetFavoriteUsers(userItemList: ArrayList<UserItem>) {
-            binding.tvNoData.visibility = View.GONE
-            mAdapter.setData(userItemList)
+        mBinding.tvNoData.visibility = View.GONE
+        mAdapter.setData(userItemList)
+        mAdapter.setListFavoriteUsers(userItemList)
     }
 
     override fun onNoFavoriteUsers() {
-        binding.tvNoData.visibility = View.VISIBLE
+        mBinding.tvNoData.visibility = View.VISIBLE
     }
 
     override fun onSaveFavoriteUsers() {
         mPresenter.getFavoriteUsers()
     }
+
 }

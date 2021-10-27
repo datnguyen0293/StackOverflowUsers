@@ -9,9 +9,7 @@ import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment<VB: ViewBinding>: DaggerFragment(), BaseView {
 
-    lateinit var binding: VB
-
-    open fun onFragmentResume() {}
+    lateinit var mBinding: VB
 
     fun activity(): BaseActivity<*> {
         return activity as BaseActivity<*>
@@ -46,7 +44,7 @@ abstract class BaseFragment<VB: ViewBinding>: DaggerFragment(), BaseView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return binding.root
+        return mBinding.root
     }
 
     override fun onDestroyView() {

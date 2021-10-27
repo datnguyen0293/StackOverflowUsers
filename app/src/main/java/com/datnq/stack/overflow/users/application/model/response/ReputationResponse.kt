@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  */
 class ReputationResponse {
     @SerializedName("items")
-    val listReputationItems: List<Reputation>? = null
+    val listReputationItems: ArrayList<Reputation>? = null
 
     @SerializedName("has_more")
     private val mHasMore = false

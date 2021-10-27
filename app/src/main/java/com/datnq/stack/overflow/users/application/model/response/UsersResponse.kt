@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  */
 class UsersResponse {
     @SerializedName("items")
-    val listUserItems: List<UserItem>? = null
+    val listUserItems: ArrayList<UserItem>? = null
 
     @SerializedName("has_more")
     private val mHasMore = false

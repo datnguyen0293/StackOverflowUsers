@@ -1,13 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        compileSdkVer = 30
+        compileSdkVer = 31
         buildToolsVer = "31.0.0"
         minSdkVer = 23
-        targetSdkVer = 30
-        kotlinVer = "1.5.30"
+        targetSdkVer = 31
+        kotlinVer = "1.5.31"
         ktxVer = '1.6.0'
-        gradleVer = '7.0.2'
+        gradleVer = '7.0.3'
         rxJavaVer = '2.2.21'
         rxAndroidVer = "2.1.1"
         okhttpVer = "2.7.5"

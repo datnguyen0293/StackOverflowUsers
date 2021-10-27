@@ -10,13 +10,11 @@ import io.reactivex.disposables.CompositeDisposable
 
 @Module
 class FavoriteUserFragmentModule {
+
     @Provides
     @FragmentScope
-    fun provideFavoriteUsersPresenter(
-        services: ServiceCall,
-        compositeDisposable: CompositeDisposable
-    ): FavoriteUsersPresenter {
-        return FavoriteUsersPresenter(services, compositeDisposable)
+    fun provideUsersAdapter(): UsersAdapter {
+        return UsersAdapter()
     }
 
 }

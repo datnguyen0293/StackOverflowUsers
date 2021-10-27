@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.UserItem
+import com.datnq.stack.overflow.users.application.view.fragment.AllUsersFragment
 import com.datnq.stack.overflow.users.core.BaseRecyclerViewAdapter
 import com.datnq.stack.overflow.users.core.Utilities
 import com.datnq.stack.overflow.users.databinding.LayoutUserItemBinding
@@ -19,6 +20,12 @@ import kotlin.collections.ArrayList
 class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersAdapter.UsersViewHolder>() {
     private var listener: UsersListener? = null
     private var listFavoriteUsers: ArrayList<UserItem> = ArrayList()
+    private var screenName = ""
+
+    fun setScreenName(name: String) {
+        screenName = name
+        notifyDataSetChanged()
+    }
 
     fun setListFavoriteUsers(list: ArrayList<UserItem>) {
         listFavoriteUsers.clear()
@@ -43,8 +50,12 @@ class UsersAdapter : BaseRecyclerViewAdapter<UserItem, UsersAdapter.UsersViewHol
 
     private fun bindData(holder: UsersViewHolder, data: UserItem) {
         holder.binding.btnBookmark.setImageResource(R.drawable.ic_favorite)
-        Picasso.Builder(holder.itemView.context).build().load(data.userAvatar)
-            .fit().into(holder.binding.imageAvatar)
+        if (AllUsersFragment::class.java.simpleName.equals(screenName, true)) {
+            Picasso.Builder(holder.itemView.context).build().load(data.userAvatar)
+                .fit().into(holder.binding.imageAvatar)
+        } else {
+            holder.binding.imageAvatar.setImageBitmap(data.userAvatarBitmap)
+        }
         holder.binding.btnBookmark.setImageResource(if (isFavorite(data)) R.drawable.ic_favorite_on else R.drawable.ic_favorite)
         holder.binding.tvUserName.text = data.userName
         holder.binding.tvLocation.text = String.format(

@@ -4,8 +4,8 @@ import com.datnq.stack.overflow.users.BuildConfig
 import com.datnq.stack.overflow.users.application.model.UserItem
 import com.datnq.stack.overflow.users.application.model.response.ReputationResponse
 import com.datnq.stack.overflow.users.application.model.response.UsersResponse
+import com.datnq.stack.overflow.users.core.LoggerUtil
 import com.datnq.stack.overflow.users.database.SQLiteHelper
-import com.gico.datnq.library.utilities.LoggerUtil
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleSource
@@ -41,17 +41,15 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ usersResponse: UsersResponse? ->
-                if (usersResponse != null) {
-                    if (usersResponse.listUserItems != null) {
-                        callback.responseSucceed(usersResponse.listUserItems)
+                usersResponse?.listUserItems?.let {
+                    if (it.isNotEmpty()) {
+                        callback.responseSucceed(it)
                     } else {
                         callback.responseFail(null)
                     }
                 }
             }, { throwable: Throwable? ->
-                if (throwable != null) {
-                    callback.callbackFail(throwable)
-                }
+                throwable?.let { e -> callback.callbackFail(e) }
             })
     }
 
@@ -84,26 +82,22 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
                     }
                 }
             }, { throwable: Throwable? ->
-                if (throwable != null) {
-                    callback.callbackFail(throwable)
-                }
+                throwable?.let { e -> callback.callbackFail(e) }
             })
     }
 
     fun getFavoriteUsers(callback: ApiCallback): Disposable {
-        return Single.defer<List<UserItem>>(Callable<SingleSource<List<UserItem>>> {
+        return Single.defer(Callable<SingleSource<ArrayList<UserItem>>> {
             Single.just(
                 sqLiteHelper.getFavoriteUsers()
             )
-        } as Callable<SingleSource<List<UserItem>>>?)
+        } as Callable<SingleSource<ArrayList<UserItem>>>?)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ listUsers: List<UserItem> ->
+            .subscribe({ listUsers: ArrayList<UserItem> ->
                 callback.responseSucceed(listUsers)
             }) { throwable: Throwable? ->
-                if (throwable != null) {
-                    callback.callbackFail(throwable)
-                }
+                throwable?.let { e -> callback.callbackFail(e) }
             }
     }
 
@@ -123,6 +117,8 @@ class ServiceCall(private val mServiceApi: ServiceApi, private val sqLiteHelper:
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { callback.responseSucceed(null) },
-                { throwable: Throwable? -> callback.callbackFail(throwable) })
+                { throwable: Throwable? ->
+                    throwable?.let { e -> callback.callbackFail(e) }
+                })
     }
 }

@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.datnq.stack.overflow.users.application.model.UserItem
-import com.gico.datnq.library.utilities.LoggerUtil
+import com.datnq.stack.overflow.users.core.LoggerUtil
 import java.io.IOException
 import java.util.*
 

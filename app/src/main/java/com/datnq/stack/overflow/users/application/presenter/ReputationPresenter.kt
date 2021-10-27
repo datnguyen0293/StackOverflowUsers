@@ -36,7 +36,7 @@ class ReputationPresenter(
                 sort,
                 object : ServiceCall.ApiCallback {
                     override fun responseSucceed(obj: Any?) {
-                        if ((obj as List<*>).isNotEmpty()) {
+                        if ((obj as ArrayList<*>).isNotEmpty()) {
                             val reputationList: ArrayList<Reputation> = ArrayList<Reputation>()
                             for (o in obj) {
                                 reputationList.add(o as Reputation)

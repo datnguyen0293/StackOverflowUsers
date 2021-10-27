@@ -22,7 +22,7 @@ class FavoriteUsersPresenter(
         compositeDisposable.add(services.getFavoriteUsers(object : ServiceCall.ApiCallback {
             override fun responseSucceed(obj: Any?) {
                 val userItemList: ArrayList<UserItem> = ArrayList<UserItem>()
-                for (o in obj as List<*>) {
+                for (o in obj as ArrayList<*>) {
                     userItemList.add(o as UserItem)
                 }
                 if (userItemList.isEmpty()) {

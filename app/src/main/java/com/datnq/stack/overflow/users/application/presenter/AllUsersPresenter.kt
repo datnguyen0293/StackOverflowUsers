@@ -25,7 +25,7 @@ class AllUsersPresenter(private val services: ServiceCall, private val composite
                 sort,
                 object : ServiceCall.ApiCallback {
                     override fun responseSucceed(obj: Any?) {
-                        if ((obj as List<*>).isNotEmpty()) {
+                        if ((obj as ArrayList<*>).isNotEmpty()) {
                             val userItemList: ArrayList<UserItem> = ArrayList<UserItem>()
                             for (o in obj) {
                                 userItemList.add(o as UserItem)

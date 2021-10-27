@@ -17,15 +17,16 @@
         tools:ignore="AllowBackup">
         <activity
             android:name=".application.view.activity.MainActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".application.view.activity.ReputationActivity"
+            android:exported="true"
             android:screenOrientation="portrait" />
     </application>
 

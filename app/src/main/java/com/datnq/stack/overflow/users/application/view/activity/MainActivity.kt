@@ -7,7 +7,6 @@ import com.datnq.stack.overflow.users.application.view.fragment.FavoriteUsersFra
 import com.datnq.stack.overflow.users.core.BaseActivity
 import com.datnq.stack.overflow.users.core.BaseFragmentPagerAdapter
 import com.datnq.stack.overflow.users.databinding.ActivityMainBinding
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
@@ -30,19 +29,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = getString(if (position == 0) R.string.all else R.string.favorite)
         }.attach()
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                pagerAdapter.createFragment(tab.position).onFragmentResume()
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                // Do nothing
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                // Do nothing
-            }
-        })
     }
 
 }

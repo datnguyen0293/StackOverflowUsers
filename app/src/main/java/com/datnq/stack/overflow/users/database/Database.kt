@@ -55,22 +55,12 @@ class Database {
         @JvmStatic
         fun toUserItem(cursor: Cursor): UserItem {
             val userItem = UserItem()
-            userItem.userId = cursor.getLong(cursor.getColumnIndex(COLUMN_USER_ID))
-            userItem.userName = cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME))
-            userItem.userAvatarBitmap = Utilities.toBitmap(
-                cursor.getBlob(
-                    cursor.getColumnIndex(
-                        COLUMN_USER_AVATAR
-                    )
-                )
-            )
-            userItem.reputation = cursor.getLong(cursor.getColumnIndex(COLUMN_REPUTATION))
-            userItem.lastAccessDate = cursor.getLong(
-                cursor.getColumnIndex(
-                    COLUMN_LAST_ACCESS_DATE
-                )
-            )
-            userItem.location = cursor.getString(cursor.getColumnIndex(COLUMN_LOCATION))
+            userItem.userId = cursor.getLong(0)
+            userItem.userName = cursor.getString(1)
+            userItem.userAvatarBitmap = Utilities.toBitmap(cursor.getBlob(2))
+            userItem.reputation = cursor.getLong(3)
+            userItem.lastAccessDate = cursor.getLong(4)
+            userItem.location = cursor.getString(5)
             return userItem
         }
     }

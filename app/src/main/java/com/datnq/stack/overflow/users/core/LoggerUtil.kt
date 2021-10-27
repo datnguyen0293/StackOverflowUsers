@@ -1,8 +1,8 @@
-package com.gico.datnq.library.utilities
+package com.datnq.stack.overflow.users.core
 
 import android.util.Log
 import androidx.annotation.NonNull
-import com.gico.datnq.library.BuildConfig
+import com.datnq.stack.overflow.users.BuildConfig
 
 /**
  * @author Dat Nguyen
