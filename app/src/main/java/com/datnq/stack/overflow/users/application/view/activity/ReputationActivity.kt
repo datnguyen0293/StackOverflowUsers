@@ -3,7 +3,6 @@ package com.datnq.stack.overflow.users.application.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.Reputation
 import com.datnq.stack.overflow.users.application.model.UserItem
@@ -17,9 +16,9 @@ import com.datnq.stack.overflow.users.core.Utilities
 import com.datnq.stack.overflow.users.databinding.ActivityReputationBinding
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
+import com.stone.vega.library.VegaLayoutManager
 import java.util.*
 import javax.inject.Inject
-
 
 class ReputationActivity : BaseActivity<ActivityReputationBinding>(), GetReputationView {
 
@@ -29,8 +28,7 @@ class ReputationActivity : BaseActivity<ActivityReputationBinding>(), GetReputat
     @Inject
     lateinit var mAdapter: ReputationAdapter
 
-    @Inject
-    lateinit var mLinearLayoutManager: LinearLayoutManager
+    lateinit var mLinearLayoutManager: VegaLayoutManager
     private var mUserItem: UserItem? = null
     private var mTotalItems: Long = 0
     private var mPage = 1
@@ -73,6 +71,7 @@ class ReputationActivity : BaseActivity<ActivityReputationBinding>(), GetReputat
      * Initialize RecyclerView
      */
     private fun initializeRecyclerView() {
+        mLinearLayoutManager = VegaLayoutManager()
         binding.rcvReputation.setHasFixedSize(true)
         binding.rcvReputation.layoutManager = mLinearLayoutManager
         binding.rcvReputation.adapter = mAdapter

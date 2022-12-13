@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.datnq.stack.overflow.users.R
 import com.datnq.stack.overflow.users.application.model.UserItem
 import com.datnq.stack.overflow.users.application.presenter.AllUsersPresenter
@@ -16,6 +15,7 @@ import com.datnq.stack.overflow.users.application.view.adapter.UsersAdapter
 import com.datnq.stack.overflow.users.core.BaseFragment
 import com.datnq.stack.overflow.users.core.RecyclerViewScrollEvent
 import com.datnq.stack.overflow.users.databinding.FragmentAllUsersBinding
+import com.stone.vega.library.VegaLayoutManager
 import java.util.*
 import javax.inject.Inject
 
@@ -43,7 +43,7 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(), GetAllUsersVie
         mAdapter.setScreenName(AllUsersFragment::class.java.simpleName)
         mAdapter.setListener(this)
         mBinding.rcvUsers.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(activity())
+        val linearLayoutManager = VegaLayoutManager()
         mBinding.rcvUsers.layoutManager = linearLayoutManager
         mBinding.rcvUsers.adapter = mAdapter
         // Scroll to load more data

@@ -1,13 +1,13 @@
 package com.datnq.stack.overflow.users.core
 
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.stone.vega.library.VegaLayoutManager
 
 /**
  * @author dat nguyen
  * @since 2019 Sep 12
  */
-abstract class RecyclerViewScrollEvent protected constructor(private val mLayoutManager: LinearLayoutManager) :
+abstract class RecyclerViewScrollEvent protected constructor(private val mLayoutManager: VegaLayoutManager) :
     RecyclerView.OnScrollListener() {
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)

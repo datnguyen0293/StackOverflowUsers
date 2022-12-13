@@ -11,6 +11,7 @@ import com.datnq.stack.overflow.users.application.view.GetFavoriteUsersView
 import com.datnq.stack.overflow.users.application.view.adapter.UsersAdapter
 import com.datnq.stack.overflow.users.core.BaseFragment
 import com.datnq.stack.overflow.users.databinding.FragmentFavoriteUsersBinding
+import com.stone.vega.library.VegaLayoutManager
 import javax.inject.Inject
 
 /**
@@ -29,7 +30,7 @@ class FavoriteUsersFragment : BaseFragment<FragmentFavoriteUsersBinding>(), GetF
         mAdapter.setScreenName(FavoriteUsersFragment::class.java.simpleName)
         mAdapter.setListener(this)
         mBinding.rcvUsers.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(activity())
+        val linearLayoutManager = VegaLayoutManager()
         mBinding.rcvUsers.layoutManager = linearLayoutManager
         mBinding.rcvUsers.adapter = mAdapter
     }
